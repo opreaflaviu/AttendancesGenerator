@@ -52,26 +52,82 @@ class AttendanceRepository {
   }
 
   Future<List<Attendance>> getGeneratedAttendances() async {
-    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    var teacherId = sharedPreferences.get(Constants.teacherId);
+//    SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
+//    var teacherId = sharedPreferences.get(Constants.teacherId);
+//
+//    var response = await http.get(
+//        Uri.encodeFull(Constants.rootApi + '/generated-attendance/$teacherId'),
+//        headers: {
+//          "Accept": "application/json"
+//        });
+//
+//    var responseData = jsonDecode(response.body);
+//
+//    var attendanceList = List<Attendance>();
+//    for (var data in responseData['result']) {
+//      attendanceList.add(Attendance.fromJSON(data));
+//    }
+//    return attendanceList;
 
-    var response = await http.get(
-        Uri.encodeFull(Constants.rootApi + '/generated-attendance/$teacherId'),
-        headers: {
-          "Accept": "application/json"
-        });
+    var attendanceList = [
+      Attendance('IA', 'Seminar', '223', 'George', 'ppT0001', '2018-09-30 16:00:12', '1'),
+      Attendance('Geometrie', 'Seminar', '223', 'Iancu', 'ppT0001', '2018-09-30 18:00:12', '1'),
+      Attendance('IA', 'Laborator', '221', 'Ion', 'ppT0001', '2018-09-30 16:00:12', '1'),
+      Attendance('OOP', 'Laborator', '233', 'George', 'ppT0001', '2018-10-11 10:05:12', '2'),
+      Attendance('Geometrie', 'Laborator', '223', 'George', 'ppT0001', '2018-10-30 16:00:12', '4'),
+    ];
 
-    var responseData = jsonDecode(response.body);
+    await Future.delayed(Duration(seconds: 5));
 
-    var attendanceList = List<Attendance>();
-    for (var data in responseData['result']) {
-      attendanceList.add(Attendance.fromJSON(data));
-    }
     return attendanceList;
   }
 
 
   Future<List<Student>> getStudentsAtCourse(String attendanceQR) async {
-    return [];
+    var studentList = [
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', '223', ''),
+      Student('grir1900', 'Gheorghe Radu', '212', ''),
+    ];
+
+//    await Future.delayed(Duration(seconds: 5));
+    return studentList;
   }
 }

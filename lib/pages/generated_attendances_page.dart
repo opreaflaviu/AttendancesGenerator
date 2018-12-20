@@ -43,8 +43,18 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                 : _generatedAttendanceList.length,
             itemBuilder: (context, index) {
               var attendance = _generatedAttendanceList.elementAt(index);
-              return GestureDetector(
+              return InkWell(
+                onTap: () {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => StudentsAtCoursePage(attendance)));
+                },
                 child: Card(
+                  margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(10.0)),
+                  elevation: 1.5,
+                  color: ColorsConstants.backgroundColorBlue,
                   child: Container(
                     margin: EdgeInsets.only(top: 8.0, bottom: 12.0),
                     child: Column(
@@ -52,8 +62,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                       children: <Widget>[
                         Text(
                           attendance.courseName,
-                          style: TextStyle(
-                            fontSize: 20.0),
+                          style: TextStyle(fontSize: 20.0),
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 14.0),
@@ -64,7 +73,8 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Icon(
                                           attendance.courseType == 'Laborator'
@@ -72,61 +82,68 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                               : CustomIcons.pen,
                                           size: 18.0,
                                           color: Colors.black38),
-                                      Padding(padding: EdgeInsets.only(right: 8.0)),
+                                      Padding(
+                                          padding: EdgeInsets.only(right: 8.0)),
                                       Text(
                                           "${attendance.courseType} ${attendance.courseNumber}",
                                           style: TextStyle(
                                               fontSize: 16.0,
-                                              color: ColorsConstants.ColorBlue)),
+                                              color:
+                                                  ColorsConstants.ColorBlue)),
                                     ],
                                   ),
                                   Padding(padding: EdgeInsets.all(6.0)),
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Icon(CustomIcons.calendar,
-                                          size: 18.0,
-                                          color: Colors.black38),
-                                      Padding(padding: EdgeInsets.only(right: 8.0)),
+                                          size: 18.0, color: Colors.black38),
+                                      Padding(
+                                          padding: EdgeInsets.only(right: 8.0)),
                                       Text(
                                           "${attendance.courseCreatedAt.substring(0, 10)}",
                                           style: TextStyle(
                                               fontSize: 16.0,
-                                              color: ColorsConstants.ColorBlue)),
+                                              color:
+                                                  ColorsConstants.ColorBlue)),
                                     ],
                                   ),
-
                                 ],
                               ),
                               Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: <Widget>[
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Icon(Icons.people,
                                           size: 18.0, color: Colors.black38),
-                                      Padding(padding: EdgeInsets.only(right: 8.0)),
-                                      Text(
-                                          "${attendance.courseClass}",
+                                      Padding(
+                                          padding: EdgeInsets.only(right: 8.0)),
+                                      Text("${attendance.courseClass}",
                                           style: TextStyle(
                                               fontSize: 16.0,
-                                              color: ColorsConstants.ColorBlue)),
+                                              color:
+                                                  ColorsConstants.ColorBlue)),
                                     ],
                                   ),
                                   Padding(padding: EdgeInsets.all(6.0)),
                                   Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Icon(Icons.access_time,
                                           size: 18.0, color: Colors.black38),
-                                      Padding(padding: EdgeInsets.only(right: 8.0)),
+                                      Padding(
+                                          padding: EdgeInsets.only(right: 8.0)),
                                       Text(
                                           "${attendance.courseCreatedAt.substring(11, 16)}",
                                           style: TextStyle(
                                               fontSize: 16.0,
-                                              color: ColorsConstants.ColorBlue)
-                                      ),
+                                              color:
+                                                  ColorsConstants.ColorBlue)),
                                     ],
                                   ),
                                 ],
@@ -137,13 +154,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                       ],
                     ),
                   ),
-                  margin: EdgeInsets.fromLTRB(18.0, 10.0, 18.0, 0.0),
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(10.0)),
-                  elevation: 1.5,
-                  color: ColorsConstants.backgroundColorBlue,
                 ),
-                onTap: openStudentListPage,
               );
             }),
         onRefresh: _getAttendanceOnRefresh,
@@ -177,10 +188,12 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
         });
   }
 
-  openStudentListPage(){}
-//  openStudentListPage(Attendance attendance) {
-//    Navigator.of(context).push(MaterialPageRoute(builder: (context) => StudentsAtCoursePage(attendance)));
-//  }
+  openStudentListPage(Attendance attendance) {
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => StudentsAtCoursePage(attendance)));
+  }
 
   Future<bool> _getAttendanceOnRefresh() async {
     await new Future.delayed(Duration(seconds: 1));
