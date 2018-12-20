@@ -22,14 +22,19 @@ class MainPageState extends State<MainPage> {
     GeneratedAttendancesPage(),
   ];
 
+  final List<String> _titleList = [
+    'Attendances',
+    'History'
+  ];
+
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
         body: _tabItem[_tabIndex],
         appBar: AppBar(
-          title: new Text('Attendances',
+          title: new Text(_titleList[_tabIndex],
               textAlign: TextAlign.center,
-              style: new TextStyle(fontSize: 32.0, color: Colors.black87)),
+              style: new TextStyle(fontSize: 24.0, color: Colors.black87)),
           centerTitle: true,
           backgroundColor: ColorsConstants.backgroundColorYellow,
           elevation: 2.0,
