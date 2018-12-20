@@ -78,40 +78,33 @@ class StudentsAtCoursePage extends StatelessWidget {
 
 
   Widget studentInformationCard(Student student){
-    return Card(
-        shape:  new RoundedRectangleBorder(
-            borderRadius: new BorderRadius.circular(10.0)),
-        margin: EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 4.0),
-        elevation: 1.0,
-        color: ColorsConstants.backgroundColorBlue,
-        child: Padding(padding: EdgeInsets.all(10.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+    return Container(
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black38))),
+      child: ListTile(
+          title: Text('${student.studentName}',
+            style: TextStyle(fontSize: 18.0, color: Colors.black87, fontWeight: FontWeight.bold),),
+          subtitle: Row(
             children: <Widget>[
-              Text('${student.studentName}',
-                style: TextStyle(fontSize: 18.0, color: Colors.black87, fontWeight: FontWeight.bold),),
-              Padding(padding: EdgeInsets.all(4.0)),
               Row(
-                children: <Widget>[
-                  Row(
-                      children: <Widget>[
-                        Text('Id ', style: TextStyle(fontSize: 16.0, color: Colors.black54)),
-                        Text('${student.studentId}', style: TextStyle(fontSize: 16.0, color: ColorsConstants.ColorBlue)),
-                      ]
-                  ),
-                  Padding(padding: EdgeInsets.all(8.0)),
-                  Row(
-                      children: <Widget>[
-                        Text('Class ',style: TextStyle(fontSize: 16.0, color: Colors.black54)),
-                        Text('${student.studentClass}', style: TextStyle(fontSize: 16.0, color: ColorsConstants.ColorBlue))
-                      ]
-                  ),
-                ],
-              )
+                  children: <Widget>[
+                    Text('Id ', style: TextStyle(fontSize: 16.0, color: Colors.black54)),
+                    Text('${student.studentId}', style: TextStyle(fontSize: 16.0, color: ColorsConstants.ColorBlue)),
+                  ]
+              ),
+              Padding(padding: EdgeInsets.all(4.0),
+                child: Row(
+                    children: <Widget>[
+                      Text('Class ',style: TextStyle(fontSize: 16.0, color: Colors.black54)),
+                      Text('${student.studentClass}', style: TextStyle(fontSize: 16.0, color: ColorsConstants.ColorBlue))
+                    ]
+                ),
+              ),
+
             ],
-          ),
-        )
+          )
+      )
     );
+
   }
 
 }

@@ -2,10 +2,10 @@ import 'package:attendances/utils/constants.dart';
 
 
 class Student {
-  final _studentId;
-  final _studentName;
-  final _studentClass;
-  final _studentPassword;
+  final String _studentId;
+  final String _studentName;
+  final int _studentClass;
+  final String _studentPassword;
 
   Student(this._studentId, this._studentName, this._studentClass, this._studentPassword);
 

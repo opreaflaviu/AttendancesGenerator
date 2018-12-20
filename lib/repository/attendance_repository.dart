@@ -83,7 +83,7 @@ class AttendanceRepository {
       Attendance('Geometrie', 'Laborator', '223', 'George', 'ppT0001', '2018-10-30 16:00:12', '4'),
     ];
 
-    await Future.delayed(Duration(seconds: 5));
+    await Future.delayed(Duration(seconds: 3));
 
     return attendanceList;
   }
@@ -91,46 +91,41 @@ class AttendanceRepository {
 
   Future<List<Student>> getStudentsAtCourse(String attendanceQR) async {
     var studentList = [
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
-      Student('ofir1929', 'Oprea Flaviu', '223', ''),
-      Student('grir1900', 'Gheorghe Radu', '212', ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+      Student('ofir1929', 'Oprea Flaviu', 223, ''),
+      Student('grir1900', 'Gheorghe Radu', 212, ''),
+
+
+
     ];
 
 //    await Future.delayed(Duration(seconds: 5));
