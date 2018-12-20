@@ -17,12 +17,17 @@ class TeacherRepository {
           Constants.teacherId: "$teacherId",
           Constants.teacherPassword: "$teacherPassword"
         });
-    Map responseData = json.decode(response.body);
-    if (responseData['result'] == 'false') {
-      return new Teacher('', '', '');
+
+    if (response.statusCode == 200) {
+      Map responseData = json.decode(response.body);
+      if (responseData['result'] == 'false') {
+        return new Teacher('', '', '');
+      } else {
+        var teacherName = responseData['result'][Constants.teacherName];
+        return new Teacher(teacherId, teacherName, teacherPassword);
+      }
     } else {
-      var teacherName = responseData['result'][Constants.teacherName];
-      return new Teacher(teacherId, teacherName, teacherPassword);
+      throw Exception("Error");
     }
   }
 

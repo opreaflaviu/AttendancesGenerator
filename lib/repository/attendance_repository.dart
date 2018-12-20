@@ -12,16 +12,17 @@ import '../model/attendance.dart';
 
 class AttendanceRepository {
   Future<bool> saveAttendance(Attendance attendance) async {
-    try {
-      var response = await http.post(
-          Uri.encodeFull(Constants.rootApi + '/generated-attendance/add'),
-          headers: {"Accept": "application/json"},
-          body: {'attendance': json.encode(attendance.toJSON())});
-    } catch (e) {
-      print("error ${e.toString()}");
+
+    var response = await http.post(
+        Uri.encodeFull(Constants.rootApi + '/generated-attendance/add'),
+        headers: {"Accept": "application/json"},
+        body: {'attendance': json.encode(attendance.toJSON())});
+
+    if (response.statusCode == 200) {
+      return true;
+    } else {
       throw Exception("Error");
     }
-    return true;
   }
 
   Future<List<CourseAttendances>> getStudentAttendances(String studentId) async {
@@ -32,23 +33,28 @@ class AttendanceRepository {
           "Accept": "application/json"
         });
 
-    var responseData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
 
-    List<CourseAttendances> courseAttendancesList = List();
-    for (var data in responseData['result']){
-      var courseName = data[Constants.courseName];
-      var courseAttendance = CourseAttendances(courseName);
-      for (var attendance in data['attendances']){
-        var courseDate = attendance[Constants.courseCreatedAt];
-        var courseType = attendance[Constants.courseType];
-        var courseNumber = attendance[Constants.courseNumber];
-        var courseTeacher = attendance[Constants.courseTeacher];
-        var course = Course(null, courseType, courseTeacher, null, courseDate, courseNumber);
-        courseAttendance.addCourse(course);
+      List<CourseAttendances> courseAttendancesList = List();
+      for (var data in responseData['result']) {
+        var courseName = data[Constants.courseName];
+        var courseAttendance = CourseAttendances(courseName);
+        for (var attendance in data['attendances']) {
+          var courseDate = attendance[Constants.courseCreatedAt];
+          var courseType = attendance[Constants.courseType];
+          var courseNumber = attendance[Constants.courseNumber];
+          var courseTeacher = attendance[Constants.courseTeacher];
+          var course = Course(
+              null, courseType, courseTeacher, null, courseDate, courseNumber);
+          courseAttendance.addCourse(course);
+        }
+        courseAttendancesList.add(courseAttendance);
       }
-      courseAttendancesList.add(courseAttendance);
+      return courseAttendancesList;
+    } else {
+      throw Exception("Error");
     }
-    return courseAttendancesList;
   }
 
   Future<List<Attendance>> getGeneratedAttendances() async {
