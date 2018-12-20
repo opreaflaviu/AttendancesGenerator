@@ -5,18 +5,6 @@ import 'package:attendances/utils/colors_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
-//
-//class StudentsAtCoursePage extends StatefulWidget {
-//  final attendance;
-//
-//  StudentsAtCoursePage(this.attendance);
-//
-//  @override
-//  _StudentsAtCoursePageState createState() =>
-//      _StudentsAtCoursePageState(this.attendance);
-//
-//}
-
 class StudentsAtCoursePage extends StatelessWidget {
   final Attendance _attendance;
   final _attendanceRepository = AttendanceRepository();
@@ -34,11 +22,17 @@ class StudentsAtCoursePage extends StatelessWidget {
             case ConnectionState.none:
             case ConnectionState.active:
             case ConnectionState.waiting:
-              return CircularProgressIndicator();
+              return Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator()
+                ),
+              );
             case ConnectionState.done:
               if (snapshot.hasError)
-                return Center(
-                  child: Text('An error was encountered'),
+                return Scaffold(
+                  body: Center(
+                    child: Text('An error was encountered'),
+                  ),
                 );
               else
                 return _displayList(snapshot.data);
@@ -46,7 +40,8 @@ class StudentsAtCoursePage extends StatelessWidget {
         });
   }
 
-  Widget _displayList(dynamic data) => Scaffold(
+  Widget _displayList(dynamic data) =>
+      Scaffold(
         body: SafeArea(
           bottom: true,
           child: CustomScrollView(
