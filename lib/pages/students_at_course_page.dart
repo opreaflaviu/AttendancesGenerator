@@ -1,5 +1,6 @@
 import 'package:attendances/model/attendance.dart';
 import 'package:attendances/model/student.dart';
+import 'package:attendances/model/student_attendance.dart';
 import 'package:attendances/repository/attendance_repository.dart';
 import 'package:attendances/utils/colors_constants.dart';
 import 'package:flutter/material.dart';
@@ -13,9 +14,10 @@ class StudentsAtCoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    print("qr: ${_attendance.attendanceQR}");
     return FutureBuilder(
         future:
-            _attendanceRepository.getStudentsAtCourse(_attendance.attendanceQR),
+        _attendanceRepository.getStudentsAtCourse(_attendance.attendanceQr),
         initialData: [],
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
@@ -24,7 +26,7 @@ class StudentsAtCoursePage extends StatelessWidget {
             case ConnectionState.waiting:
               return Scaffold(
                 body: Center(
-                  child: CircularProgressIndicator()
+                    child: CircularProgressIndicator()
                 ),
               );
             case ConnectionState.done:
@@ -42,69 +44,89 @@ class StudentsAtCoursePage extends StatelessWidget {
 
   Widget _displayList(dynamic data) =>
       Scaffold(
-        body: SafeArea(
-          bottom: true,
-          child: CustomScrollView(
-            slivers: <Widget>[
-              SliverAppBar(
-                backgroundColor: ColorsConstants.backgroundColorYellow,
-                iconTheme: IconThemeData(color: Colors.black),
-                expandedHeight: 250.0,
-                elevation: 2.0,
-                pinned: true,
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Text(
-                    '${_attendance.courseName}  ${_attendance.courseType} ${_attendance.courseNumber}  Class ${_attendance.courseClass}',
-                    style: TextStyle(fontSize: 14.0, color: Colors.black),
-                  ),
-                  background: Center(
-                    child: QrImage(
-                      data: _attendance.attendanceQR,
-                      size: 180.0,
+          body: SafeArea(
+            bottom: true,
+            child: CustomScrollView(
+              slivers: <Widget>[
+                SliverAppBar(
+                  backgroundColor: ColorsConstants.backgroundColorYellow,
+                  iconTheme: IconThemeData(color: Colors.black),
+                  expandedHeight: 250.0,
+                  elevation: 2.0,
+                  pinned: true,
+                  flexibleSpace: FlexibleSpaceBar(
+                    centerTitle: true,
+                    title: Text(
+                      '${_attendance.courseName}  ${_attendance
+                          .courseType} ${_attendance
+                          .courseNumber}  Class ${_attendance.courseClass}',
+                      style: TextStyle(fontSize: 14.0, color: Colors.black),
+                    ),
+                    background: Center(
+                      child: QrImage(
+                        data: _attendance.attendanceQr,
+                        size: 180.0,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SliverList(
-                  delegate: SliverChildListDelegate(data
-                      .map<Widget>((Student student) =>
-                          studentInformationCard(student))
-                      .toList()))
-            ],
-          ),
-        )
+                SliverList(
+                    delegate: SliverChildListDelegate(data
+                        .map<Widget>((StudentAttendance studentAttendance) =>
+                        studentInformationCard(studentAttendance))
+                        .toList()))
+              ],
+            ),
+          )
       );
 
 
-  Widget studentInformationCard(Student student){
+  Widget studentInformationCard(StudentAttendance studentAttendance) {
     return Container(
-      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: Colors.black38))),
-      child: ListTile(
-          title: Text('${student.studentName}',
-            style: TextStyle(fontSize: 18.0, color: Colors.black87, fontWeight: FontWeight.bold),),
-          subtitle: Row(
-            children: <Widget>[
-              Row(
-                  children: <Widget>[
-                    Text('Id ', style: TextStyle(fontSize: 16.0, color: Colors.black54)),
-                    Text('${student.studentId}', style: TextStyle(fontSize: 16.0, color: ColorsConstants.ColorBlue)),
-                  ]
-              ),
-              Padding(padding: EdgeInsets.all(4.0),
-                child: Row(
-                    children: <Widget>[
-                      Text('Class ',style: TextStyle(fontSize: 16.0, color: Colors.black54)),
-                      Text('${student.studentClass}', style: TextStyle(fontSize: 16.0, color: ColorsConstants.ColorBlue))
-                    ]
+        decoration: BoxDecoration(
+            border: Border(bottom: BorderSide(color: Colors.black38))),
+        child: ListTile(
+            title: Text('${studentAttendance.student.studentName}',
+              style: TextStyle(fontSize: 18.0,
+                  color: Colors.black87,
+                  fontWeight: FontWeight.bold),),
+            subtitle: Row(
+              children: <Widget>[
+                Padding(padding: EdgeInsets.all(0.0),
+                    child: Row(
+                        children: <Widget>[
+                          Text('Id ', style: TextStyle(
+                              fontSize: 16.0, color: Colors.black54)),
+                          Text('${studentAttendance.student.studentId}', style: TextStyle(
+                              fontSize: 16.0,
+                              color: ColorsConstants.ColorBlue)),
+                        ]
+                    )),
+                Padding(padding: EdgeInsets.all(4.0),
+                  child: Row(
+                      children: <Widget>[
+                        Text('Class ', style: TextStyle(
+                            fontSize: 16.0, color: Colors.black54)),
+                        Text('${studentAttendance.student.studentClass}', style: TextStyle(
+                            fontSize: 16.0, color: ColorsConstants.ColorBlue))
+                      ]
+                  ),
                 ),
-              ),
 
-            ],
-          )
-      )
+                Padding(padding: EdgeInsets.all(4.0),
+                  child: Row(
+                      children: <Widget>[
+                        Text('Date ', style: TextStyle(
+                            fontSize: 16.0, color: Colors.black54)),
+                        Text('${studentAttendance.eventCreatedAt}', style: TextStyle(
+                            fontSize: 16.0, color: ColorsConstants.ColorBlue))
+                      ]
+                  ),
+                ),
+              ],
+            )
+        )
     );
-
   }
 
 }

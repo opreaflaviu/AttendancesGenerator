@@ -9,8 +9,9 @@ class Attendance {
   final String _courseCreatedAt;
   final String _courseNumber;
   final String _courseClass;
+  final String attendanceQr;
 
-  Attendance(this._courseName, this._courseType, this._courseClass, this._courseTeacher, this._courseTeacherId, this._courseCreatedAt, this._courseNumber);
+  Attendance(this._courseName, this._courseType, this._courseClass, this._courseTeacher, this._courseTeacherId, this._courseCreatedAt, this._courseNumber, {this.attendanceQr});
 
   String get courseNumber => _courseNumber;
 
@@ -26,7 +27,7 @@ class Attendance {
 
   String get courseClass => _courseClass;
 
-  String get attendanceQR => "$_courseName + $_courseType + $_courseClass + $_courseTeacher' + $_courseTeacherId + $_courseCreatedAt + $_courseNumber";
+  String get attendanceQR => attendanceQr;
 
   Map<String, dynamic> toJSON() {
     var map = Map<String, dynamic>();
@@ -37,7 +38,7 @@ class Attendance {
     map[Constants.courseTeacherId] = this._courseTeacherId;
     map[Constants.courseCreatedAt] = this._courseCreatedAt;
     map[Constants.courseNumber] = this._courseNumber;
-    map[Constants.attendanceQR] = this.attendanceQR;
+    map[Constants.attendanceQR] = this.toString();
 
     return map;
   }
@@ -48,7 +49,13 @@ class Attendance {
     this._courseClass = attendance[Constants.courseClass],
     this._courseTeacher = attendance[Constants.courseTeacher],
     this._courseTeacherId = attendance[Constants.courseTeacherId],
-    this._courseCreatedAt = attendance[Constants.courseCreatedAt].toString().substring(0, 16),
-    this._courseNumber = attendance[Constants.courseNumber];
+    this._courseCreatedAt = attendance[Constants.courseCreatedAt].toString().substring(0, 19),
+    this._courseNumber = attendance[Constants.courseNumber],
+    this.attendanceQr = attendance[Constants.attendanceQR];
+
+  @override
+  String toString() {
+    return "$courseName+$courseType+$courseClass+$courseTeacher+$courseTeacherId+$courseCreatedAt+$courseNumber";
+  }
 
 }

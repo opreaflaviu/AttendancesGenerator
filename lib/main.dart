@@ -16,7 +16,6 @@ class MyApp extends StatelessWidget {
       'login_page': (BuildContext context) => LoginPage(),
       'register_page': (BuildContext context) => RegisterPage(),
       'main_page': (BuildContext context) => MainPage(),
-//      'students_at_course_page': (BuildContext context) => StudentsAtCoursePage()
-    }, home: MainPage());
+    }, home: LandingPage());
   }
 }

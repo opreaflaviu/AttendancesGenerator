@@ -45,6 +45,8 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
               var attendance = _generatedAttendanceList.elementAt(index);
               return InkWell(
                 onTap: () {
+
+                  print("open: ${attendance.attendanceQR}");
                   Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => StudentsAtCoursePage(attendance)));

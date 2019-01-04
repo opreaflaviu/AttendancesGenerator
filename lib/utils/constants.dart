@@ -20,6 +20,8 @@ abstract class Constants {
   static const String courseNumber = "courseNumber";
   static const String attendanceQR = "attendanceQR";
 
+  static const String eventCreatedAt = "eventCreatedAt";
+
 
 
 
