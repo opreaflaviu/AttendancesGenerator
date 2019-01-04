@@ -14,7 +14,6 @@ class StudentsAtCoursePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("qr: ${_attendance.attendanceQR}");
     return FutureBuilder(
         future:
         _attendanceRepository.getStudentsAtCourse(_attendance.attendanceQr),
@@ -22,6 +21,11 @@ class StudentsAtCoursePage extends StatelessWidget {
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
             case ConnectionState.none:
+              return Scaffold(
+                body: Center(
+                  child: Text('No internet connection'),
+                ),
+              );
             case ConnectionState.active:
             case ConnectionState.waiting:
               return Scaffold(
@@ -30,13 +34,15 @@ class StudentsAtCoursePage extends StatelessWidget {
                 ),
               );
             case ConnectionState.done:
-              if (snapshot.hasError)
+              if (snapshot.hasError) {
+                print("Error: ${snapshot.error}");
+
                 return Scaffold(
                   body: Center(
                     child: Text('An error was encountered'),
                   ),
                 );
-              else
+              }else
                 return _displayList(snapshot.data);
           }
         });
@@ -118,7 +124,7 @@ class StudentsAtCoursePage extends StatelessWidget {
                       children: <Widget>[
                         Text('Date ', style: TextStyle(
                             fontSize: 16.0, color: Colors.black54)),
-                        Text('${studentAttendance.eventCreatedAt}', style: TextStyle(
+                        Text('${studentAttendance.eventCreatedAt.substring(0, 16)}', style: TextStyle(
                             fontSize: 16.0, color: ColorsConstants.ColorBlue))
                       ]
                   ),

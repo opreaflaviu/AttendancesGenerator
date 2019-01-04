@@ -22,10 +22,7 @@ class MainPageState extends State<MainPage> {
     GeneratedAttendancesPage(),
   ];
 
-  final List<String> _titleList = [
-    'Attendances',
-    'History'
-  ];
+  final List<String> _titleList = ['Attendances', 'History'];
 
   @override
   Widget build(BuildContext context) {
@@ -130,17 +127,28 @@ class StudentAttendanceSearch extends SearchDelegate<Attendance> {
               children: data[index]
                   .attendanceList
                   .map<Widget>((Course course) => Padding(
-                      padding: EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 4.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: <Widget>[
-                          Text('${course.type} ${course.number}'),
-                          Text('${course.createdAt}'.substring(0, 10)),
-                          Text('${course.createdAt}'.substring(10, 16)),
-                          Text('${course.teacher}'),
-                        ],
-                      ),)
-              ).toList(),
+                        padding: EdgeInsets.fromLTRB(32.0, 8.0, 32.0, 4.0),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: <Widget>[
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Text('${course.type} ${course.number}'),
+                                Padding(padding: EdgeInsets.all(8.0)),
+                                Text('${course.teacher}')
+                              ],
+                            ),
+                            Padding(padding: EdgeInsets.all(4.0)),
+                            Row(mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Text('${course.createdAt}'.substring(0, 16)),
+                              ],
+                            )
+                          ],
+                        ),
+                      ))
+                  .toList(),
             ));
   }
 }

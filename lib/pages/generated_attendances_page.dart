@@ -170,14 +170,14 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
     super.initState();
   }
 
-  Future<Null> _showAlertDialog() {
+  Future<Null> _showAlertDialog(String title, String content) {
     return showDialog<Null>(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('No internet connection'),
-            content: Text('Please connect wi-fi or mobile data'),
+            title: Text(title),
+            content: Text(content),
             actions: <Widget>[
               FlatButton(
                 child: Text('Ok'),
@@ -211,7 +211,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
       });
       _getGeneratedAttendances();
     } else {
-      _showAlertDialog();
+      _showAlertDialog('No internet connection', 'Please connect wi-fi or mobile data');
     }
   }
 
@@ -229,7 +229,6 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
 
   @override
   onLoadAttendancesError() {
-    // TODO: implement onLoadAttendancesError
-    return null;
+    _showAlertDialog('Error', 'Cannot fetch data');
   }
 }
