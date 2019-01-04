@@ -6,8 +6,6 @@ import 'package:attendances/utils/custom_icons.dart';
 import 'package:attendances/views/generated_attendance_view.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:quiver/collection.dart';
 
 class GeneratedAttendancesPage extends StatefulWidget {
   @override
@@ -45,8 +43,6 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
               var attendance = _generatedAttendanceList.elementAt(index);
               return InkWell(
                 onTap: () {
-
-                  print("open: ${attendance.attendanceQR}");
                   Navigator.push(
                       context,
                       MaterialPageRoute(builder: (context) => StudentsAtCoursePage(attendance)));

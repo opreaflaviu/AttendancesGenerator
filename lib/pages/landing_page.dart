@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:attendances/pages/main_page.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:attendances/utils/colors_constants.dart';
@@ -11,25 +12,13 @@ class LandingPage extends StatefulWidget {
 }
 
 class LandingPageState extends State<LandingPage> {
-  final GlobalKey<ScaffoldState> _scaffoldState =
-  new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldState = new GlobalKey<ScaffoldState>();
   Connectivity _connectivity = new Connectivity();
   StreamSubscription<ConnectivityResult> _connSub;
-  static Widget _content;
-  var teacherName;
-  var teacherNumber;
 
-  LandingPageState() {
-    getFromSharedPreferences();
-  }
 
   @override
   Widget build(BuildContext context) {
-    _content = _displayContent(context);
-    return _content;
-  }
-
-  Widget _displayContent(BuildContext context) {
     return new Scaffold(
       backgroundColor: ColorsConstants.backgroundColorYellow,
       key: _scaffoldState,
@@ -43,7 +32,7 @@ class LandingPageState extends State<LandingPage> {
                   elevation: 2.0,
                     padding: new EdgeInsets.fromLTRB(142.0, 16.0, 142.0, 16.0),
                     child: new Text("Login", textScaleFactor: 1.5, style: TextStyle(color: ColorsConstants.customBlack)),
-                    onPressed: loginWithSharedPrefs,
+                    onPressed: (() => Navigator.of(context).pushNamed('login_page')),
                     splashColor: Colors.white,
                     color: Colors.white,
                     shape: new RoundedRectangleBorder(
@@ -78,14 +67,6 @@ class LandingPageState extends State<LandingPage> {
         )));
   }
 
-  void loginWithSharedPrefs() {
-    if (teacherName != null && teacherNumber != null) {
-      Navigator.of(context).pushNamedAndRemoveUntil('main_page', (Route<dynamic> route) => false);
-    } else {
-      Navigator.of(context).pushNamed('login_page');
-    }
-  }
-
   void initState() {
     super.initState();
     _connSub =
@@ -94,17 +75,6 @@ class LandingPageState extends State<LandingPage> {
         });
   }
 
-  Future<Null> initPlatform() async {
-    ConnectivityResult result;
-    try {
-      result = await _connectivity.checkConnectivity();
-    } catch (e) {
-      print(e.toString());
-      result = null;
-    }
-    if (!mounted) return;
-    _showSnackBar(result);
-  }
 
   @override
   void dispose() {
@@ -112,12 +82,11 @@ class LandingPageState extends State<LandingPage> {
     super.dispose();
   }
 
-  getFromSharedPreferences() async {
+  Future<bool> getFromSharedPreferences() async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
-    setState(() {
-      teacherName = sharedPreferences.getString(Constants.teacherName);
-      teacherNumber = sharedPreferences.getString(Constants.teacherId);
-    });
-    print("$teacherName,  $teacherNumber");
+    var teacherName = sharedPreferences.getString(Constants.teacherName);
+    var teacherNumber = sharedPreferences.getString(Constants.teacherId);
+
+    return teacherName != null && teacherNumber != null;
   }
 }
