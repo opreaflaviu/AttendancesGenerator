@@ -171,8 +171,6 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
       print("${_attendance.toString()},  ${_attendance.attendanceQR}");
       return Expanded(
           child: Center(
-        widthFactor: 150.0,
-        heightFactor: 150.0,
         child: RepaintBoundary(
           child: QrImage(
             data: _attendance.toString(),

@@ -75,7 +75,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Icon(
-                                          attendance.courseType == 'Laborator'
+                                          attendance.courseType.startsWith('L') || attendance.courseType.startsWith('l')
                                               ? CustomIcons.computer
                                               : CustomIcons.pen,
                                           size: 18.0,

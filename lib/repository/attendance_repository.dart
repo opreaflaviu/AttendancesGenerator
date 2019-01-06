@@ -91,7 +91,6 @@ class AttendanceRepository {
 
       var responseData = jsonDecode(response.body);
       for (var data in responseData['result']) {
-        var student = StudentAttendance.fromJSON(data);
         studentAttendanceList.add(StudentAttendance.fromJSON(data));
       }
       return studentAttendanceList;

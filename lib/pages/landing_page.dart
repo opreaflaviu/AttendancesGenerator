@@ -12,10 +12,10 @@ class LandingPage extends StatefulWidget {
 }
 
 class LandingPageState extends State<LandingPage> {
-  final GlobalKey<ScaffoldState> _scaffoldState = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> _scaffoldState =
+      new GlobalKey<ScaffoldState>();
   Connectivity _connectivity = new Connectivity();
   StreamSubscription<ConnectivityResult> _connSub;
-
 
   @override
   Widget build(BuildContext context) {
@@ -28,28 +28,43 @@ class LandingPageState extends State<LandingPage> {
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: <Widget>[
-                new RaisedButton(
-                  elevation: 2.0,
-                    padding: new EdgeInsets.fromLTRB(142.0, 16.0, 142.0, 16.0),
-                    child: new Text("Login", textScaleFactor: 1.5, style: TextStyle(color: ColorsConstants.customBlack)),
-                    onPressed: (() => Navigator.of(context).pushNamed('login_page')),
-                    splashColor: Colors.white,
-                    color: Colors.white,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)),
+                Center(
+                    child: Image(
+                        image: AssetImage('assets/images/AttendancesGeneratorLogo.png'),
+                      width: 300,
+                      height: 300,
+                    )
                 ),
-                new Container(padding: new EdgeInsets.only(top: 20.0)),
-                new RaisedButton(
+                RaisedButton(
                   elevation: 2.0,
-                  padding: new EdgeInsets.fromLTRB(132.0, 16.0, 132.0, 16.0),
-                  child: new Text("Register", textScaleFactor: 1.5, style: TextStyle(color: ColorsConstants.customBlack),),
-                  onPressed: (() => Navigator.of(context).pushNamed('register_page')),
+                  padding: new EdgeInsets.fromLTRB(142.0, 16.0, 142.0, 16.0),
+                  child: new Text("Login",
+                      textScaleFactor: 1.5,
+                      style: TextStyle(color: ColorsConstants.customBlack)),
+                  onPressed: (() =>
+                      Navigator.of(context).pushNamed('login_page')),
                   splashColor: Colors.white,
                   color: Colors.white,
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
                 ),
-                new Container(padding: new EdgeInsets.only(top: 50.0)),
+                Padding(padding: new EdgeInsets.only(top: 20.0)),
+                RaisedButton(
+                  elevation: 2.0,
+                  padding: new EdgeInsets.fromLTRB(132.0, 16.0, 132.0, 16.0),
+                  child: new Text(
+                    "Register",
+                    textScaleFactor: 1.5,
+                    style: TextStyle(color: ColorsConstants.customBlack),
+                  ),
+                  onPressed: (() =>
+                      Navigator.of(context).pushNamed('register_page')),
+                  splashColor: Colors.white,
+                  color: Colors.white,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                ),
+                Padding(padding: new EdgeInsets.only(top: 50.0)),
               ],
             ),
           )),
@@ -58,23 +73,22 @@ class LandingPageState extends State<LandingPage> {
 
   void _showSnackBar(var snackBarText) {
     _scaffoldState.currentState.showSnackBar(new SnackBar(
-        content: new Padding(
-          padding: new EdgeInsets.only(left: 32.0, top: 4.0, bottom: 6.0),
-          child: new Text(
-            snackBarText != ConnectivityResult.none ? "Connected" : "No Connection",
-            style: new TextStyle(fontSize: 16.0),
-          ),
-        )));
+        content: Padding(
+      padding: EdgeInsets.only(left: 32.0, top: 4.0, bottom: 6.0),
+      child: Text(
+        snackBarText != ConnectivityResult.none ? "Connected" : "No Connection",
+        style: TextStyle(fontSize: 16.0),
+      ),
+    )));
   }
 
   void initState() {
     super.initState();
     _connSub =
         _connectivity.onConnectivityChanged.listen((ConnectivityResult result) {
-          _showSnackBar(result);
-        });
+      _showSnackBar(result);
+    });
   }
-
 
   @override
   void dispose() {
