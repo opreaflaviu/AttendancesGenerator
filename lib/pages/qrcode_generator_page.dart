@@ -124,7 +124,14 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
       _courseCreatedAt = DateTime.now().toIso8601String();
 
       setState(() {
-        _attendance = Attendance(_courseName.text, _courseType.text, _courseClass.text, _teacherName, _teacherId, _courseCreatedAt, _courseNumber.text);
+        _attendance = Attendance(
+            _courseName.text,
+            _courseType.text,
+            _courseClass.text,
+            _teacherName,
+            _teacherId,
+            _courseCreatedAt,
+            _courseNumber.text);
         _enableWidgets = true;
       });
     } else
@@ -169,8 +176,8 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
     if (_enableWidgets) {
       return Expanded(
           child: Center(
-        widthFactor: 150.0,
-        heightFactor: 150.0,
+        widthFactor: 250.0,
+        heightFactor: 250.0,
         child: RepaintBoundary(
           child: QrImage(
             data: _attendance.attendanceQR,
@@ -186,8 +193,7 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
   Widget saveButtonWidget() {
     if (_enableWidgets) {
       return RaisedButton(
-        padding: new EdgeInsets.only(
-            left: 140.0, right: 140.0),
+        padding: new EdgeInsets.only(left: 140.0, right: 140.0),
         child: new Text("Save QR", textScaleFactor: 1.2),
         onPressed: () {
           _saveQR();
