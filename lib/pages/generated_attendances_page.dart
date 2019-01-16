@@ -6,8 +6,6 @@ import 'package:attendances/utils/custom_icons.dart';
 import 'package:attendances/views/generated_attendance_view.dart';
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_flutter/qr_flutter.dart';
-import 'package:quiver/collection.dart';
 
 class GeneratedAttendancesPage extends StatefulWidget {
   @override
@@ -77,7 +75,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Icon(
-                                          attendance.courseType == 'Laborator'
+                                          attendance.courseType.startsWith('L') || attendance.courseType.startsWith('l')
                                               ? CustomIcons.computer
                                               : CustomIcons.pen,
                                           size: 18.0,
@@ -168,14 +166,14 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
     super.initState();
   }
 
-  Future<Null> _showAlertDialog() {
+  Future<Null> _showAlertDialog(String title, String content) {
     return showDialog<Null>(
         context: context,
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('No internet connection'),
-            content: Text('Please connect wi-fi or mobile data'),
+            title: Text(title),
+            content: Text(content),
             actions: <Widget>[
               FlatButton(
                 child: Text('Ok'),
@@ -209,7 +207,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
       });
       _getGeneratedAttendances();
     } else {
-      _showAlertDialog();
+      _showAlertDialog('No internet connection', 'Please connect wi-fi or mobile data');
     }
   }
 
@@ -227,7 +225,6 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
 
   @override
   onLoadAttendancesError() {
-    // TODO: implement onLoadAttendancesError
-    return null;
+    _showAlertDialog('Error', 'Cannot fetch data');
   }
 }

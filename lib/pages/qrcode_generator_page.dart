@@ -84,6 +84,7 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
                     padding: new EdgeInsets.only(left: 32.0, right: 32.0),
                     child: new Text("Generate QR", textScaleFactor: 1.2),
                     onPressed: () {
+                      print("pressed");
                       _generateQR();
                     },
                     splashColor: ColorsConstants.backgroundColorYellow,
@@ -121,7 +122,7 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
           await SharedPreferences.getInstance();
       _teacherName = sharedPreferences.get(Constants.teacherName);
       _teacherId = sharedPreferences.get(Constants.teacherId);
-      _courseCreatedAt = DateTime.now().toIso8601String();
+      _courseCreatedAt = DateTime.now().toIso8601String().substring(0, 19);
 
       setState(() {
         _attendance = Attendance(
@@ -174,13 +175,14 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
 
   Widget qrWidgets() {
     if (_enableWidgets) {
+      print("${_attendance.toString()},  ${_attendance.attendanceQR}");
       return Expanded(
           child: Center(
         widthFactor: 250.0,
         heightFactor: 250.0,
         child: RepaintBoundary(
           child: QrImage(
-            data: _attendance.attendanceQR,
+            data: _attendance.toString(),
             size: 250.0,
           ),
         ),
