@@ -43,6 +43,7 @@ class LoginPageState extends State<LoginPage> {
             automaticallyImplyLeading: false),
         body: new Center(
           child: SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
               child: Container(
             margin: new EdgeInsets.only(right: 32.0, left: 32.0),
             child: new Column(

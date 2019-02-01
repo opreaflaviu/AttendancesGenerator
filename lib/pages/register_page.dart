@@ -49,6 +49,7 @@ class RegisterPageState extends State<RegisterPage> {
             automaticallyImplyLeading: false),
         body: Center(
           child: SingleChildScrollView(
+              physics: NeverScrollableScrollPhysics(),
               child: Container(
             margin: EdgeInsets.only(right: 32.0, left: 32.0),
             child: Column(
