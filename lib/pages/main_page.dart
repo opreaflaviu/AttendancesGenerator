@@ -2,10 +2,8 @@ import 'package:attendances/model/attendance.dart';
 import 'package:attendances/model/course.dart';
 import 'package:attendances/pages/generated_attendances_page.dart';
 import 'package:attendances/repository/attendance_repository.dart';
-import 'package:attendances/utils/constants.dart';
 import 'package:attendances/utils/custom_icons.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 import '../utils/colors_constants.dart';
 import '../pages/qrcode_generator_page.dart';
@@ -26,7 +24,8 @@ class MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
+        resizeToAvoidBottomPadding: false,
         body: _tabItem[_tabIndex],
         appBar: AppBar(
           title: new Text(_titleList[_tabIndex],

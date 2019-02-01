@@ -25,79 +25,119 @@ class LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
+    var _mediaQuery = MediaQuery.of(context);
+    var _widthDP = _mediaQuery.size.width;
+    var _heightDP = _mediaQuery.size.height;
+
     return new Scaffold(
-      backgroundColor: ColorsConstants.backgroundColorYellow,
-      key: _scaffoldState,
-      appBar: new AppBar(
-          title: new Text("Login",
-              textAlign: TextAlign.center,
-              style: new TextStyle(fontSize: 32.0, color: ColorsConstants.customBlack)),
-          centerTitle: true,
-          backgroundColor: ColorsConstants.backgroundColorYellow,
-          elevation: 1.0,
-          automaticallyImplyLeading: false),
-      body: new Center(
-          child: new Container(
-        margin: new EdgeInsets.only(right: 32.0, left: 32.0),
-        child: new Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            new TextField(
-                decoration: new InputDecoration(
-                    labelText: 'Name',
-                    hintText: "ex: Popescu Ion",
-                    contentPadding: new EdgeInsets.only(top: 16.0),
-                    labelStyle: new TextStyle(fontSize: 16.0),
-                ),
-                style: new TextStyle(fontSize: 20.0, color: Colors.black),
-                controller: _name),
-            new TextField(
-                decoration: new InputDecoration(
-                    labelText: 'Number',
-                    contentPadding: new EdgeInsets.only(top: 16.0),
-                    labelStyle: new TextStyle(fontSize: 16.0)),
-                style: new TextStyle(fontSize: 20.0, color: Colors.black),
-                controller: _number),
-            new TextField(
-                decoration: new InputDecoration(
-                    labelText: 'Password',
-                    contentPadding: new EdgeInsets.only(top: 16.0),
-                    labelStyle: new TextStyle(fontSize: 16.0)),
-                style: new TextStyle(fontSize: 20.0, color: Colors.black),
-                obscureText: true,
-                controller: _password),
-            new Container(
-              padding: new EdgeInsets.only(top: 16.0),
-            ),
-            new Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        backgroundColor: ColorsConstants.backgroundColorYellow,
+        key: _scaffoldState,
+        appBar: new AppBar(
+            title: new Text("Login",
+                textAlign: TextAlign.center,
+                style: new TextStyle(
+                    fontSize: 32.0, color: ColorsConstants.customBlack)),
+            centerTitle: true,
+            backgroundColor: ColorsConstants.backgroundColorYellow,
+            elevation: 2.0,
+            automaticallyImplyLeading: false),
+        body: new Center(
+          child: SingleChildScrollView(
+              child: Container(
+            margin: new EdgeInsets.only(right: 32.0, left: 32.0),
+            child: new Column(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                new RaisedButton(
-                  highlightColor: ColorsConstants.backgroundColor,
-                  padding: new EdgeInsets.only(left: 32.0, right: 32.0),
-                  child: new Text("Back", textScaleFactor: 1.4, style: TextStyle(color: ColorsConstants.customBlack)),
-                  onPressed: (() => _onBackClick(context)),
-                  splashColor: Colors.white,
-                  color: Colors.white,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
+                ListTile(
+                  leading:
+                      Icon(Icons.person, color: ColorsConstants.customBlack),
+                  title: TextField(
+                      cursorColor: ColorsConstants.customBlack,
+                      decoration: new InputDecoration(
+                        hintText: 'Name',
+                        contentPadding: new EdgeInsets.only(bottom: 4.0),
+                        hintStyle: TextStyle(
+                            fontSize: 16.0, color: ColorsConstants.customBlack),
+                        labelStyle: new TextStyle(
+                            fontSize: 16.0, color: ColorsConstants.customBlack),
+                      ),
+                      style: new TextStyle(fontSize: 16.0, color: Colors.black),
+                      controller: _name),
                 ),
-                new RaisedButton(
-                  highlightColor: ColorsConstants.backgroundColor,
-                  padding: new EdgeInsets.only(left: 32.0, right: 32.0),
-                  child: new Text("Login", textScaleFactor: 1.4, style: TextStyle(color: ColorsConstants.customBlack)),
-                  onPressed: _onLoginClick,
-                  splashColor: Colors.white,
-                  color: Colors.white,
-                  shape: new RoundedRectangleBorder(
-                      borderRadius: new BorderRadius.circular(30.0)),
+                ListTile(
+                  leading:
+                      Icon(Icons.label, color: ColorsConstants.customBlack),
+                  title: TextField(
+                      cursorColor: ColorsConstants.customBlack,
+                      decoration: new InputDecoration(
+                          hintText: 'Number',
+                          contentPadding: new EdgeInsets.only(bottom: 4.0),
+                          hintStyle: TextStyle(
+                              fontSize: 16.0,
+                              color: ColorsConstants.customBlack),
+                          labelStyle: new TextStyle(
+                              fontSize: 16.0,
+                              color: ColorsConstants.customBlack)),
+                      style: new TextStyle(fontSize: 16.0, color: Colors.black),
+                      controller: _number),
+                ),
+                ListTile(
+                  leading: Icon(Icons.lock, color: ColorsConstants.customBlack),
+                  title: TextField(
+                      cursorColor: ColorsConstants.customBlack,
+                      decoration: new InputDecoration(
+                          hintText: 'Password',
+                          contentPadding: new EdgeInsets.only(bottom: 4.0),
+                          hintStyle: TextStyle(
+                              fontSize: 16.0,
+                              color: ColorsConstants.customBlack),
+                          labelStyle: new TextStyle(
+                              fontSize: 16.0,
+                              color: ColorsConstants.customBlack)),
+                      style: new TextStyle(fontSize: 16.0, color: Colors.black),
+                      obscureText: true,
+                      controller: _password),
+                ),
+                Container(
+                  padding: new EdgeInsets.only(top: 16.0),
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
+                    new RaisedButton(
+                      highlightColor: ColorsConstants.backgroundColor,
+                      padding: new EdgeInsets.fromLTRB(_widthDP * 0.10,
+                          _heightDP * 0.01, _widthDP * 0.10, _heightDP * 0.01),
+                      child: new Text("Back",
+                          style: TextStyle(
+                              color: ColorsConstants.customBlack,
+                              fontSize: 16.0)),
+                      onPressed: (() => _onBackClick(context)),
+                      splashColor: Colors.white,
+                      color: Colors.white,
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0)),
+                    ),
+                    new RaisedButton(
+                      highlightColor: ColorsConstants.backgroundColor,
+                      padding: new EdgeInsets.fromLTRB(_widthDP * 0.10,
+                          _heightDP * 0.01, _widthDP * 0.10, _heightDP * 0.01),
+                      child: new Text("Login",
+                          style: TextStyle(
+                              color: ColorsConstants.customBlack,
+                              fontSize: 16.0)),
+                      onPressed: _onLoginClick,
+                      splashColor: Colors.white,
+                      color: Colors.white,
+                      shape: new RoundedRectangleBorder(
+                          borderRadius: new BorderRadius.circular(30.0)),
+                    )
+                  ],
                 )
               ],
-            )
-          ],
-        ),
-      )),
-    );
+            ),
+          )),
+        ));
   }
 
   void _clearTextFields() {
@@ -128,8 +168,7 @@ class LoginPageState extends State<LoginPage> {
 
   void _validStudent(Teacher teacher) {
     _saveInSharedPrefs(teacher);
-    Navigator
-        .of(context)
+    Navigator.of(context)
         .pushNamedAndRemoveUntil('main_page', (Route<dynamic> route) => false);
   }
 
@@ -144,7 +183,8 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void _saveInSharedPrefs(Teacher teacher) async {
-    SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
+    SharedPreferencesUtils sharedPreferencesUtils =
+        new SharedPreferencesUtils();
     sharedPreferencesUtils.saveTeacher(teacher);
   }
 }

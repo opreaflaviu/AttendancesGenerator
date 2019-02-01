@@ -35,86 +35,129 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
 
   @override
   Widget build(BuildContext context) {
+    var _mediaQuery = MediaQuery.of(context);
+    var _widthDP = _mediaQuery.size.width;
+    var _heightDP = _mediaQuery.size.height;
+
     return SafeArea(
-      minimum: EdgeInsets.all(20.0),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            TextField(
-                decoration: new InputDecoration(
-                    labelText: 'Course Name',
-                    hintText: 'ex: OOP',
-                    contentPadding: new EdgeInsets.only(top: 8.0),
-                    labelStyle: new TextStyle(fontSize: 16.0)),
-                style: new TextStyle(fontSize: 20.0, color: Colors.black),
-                controller: _courseName),
-            TextField(
-                decoration: new InputDecoration(
-                    labelText: 'Course Type',
-                    hintText: 'ex: Laboratory',
-                    contentPadding: new EdgeInsets.only(top: 8.0),
-                    labelStyle: new TextStyle(fontSize: 16.0)),
-                style: new TextStyle(fontSize: 20.0, color: Colors.black),
-                controller: _courseType),
-            TextField(
-                decoration: new InputDecoration(
-                    labelText: 'Course Class',
-                    hintText: 'ex: 222',
-                    contentPadding: new EdgeInsets.only(top: 8.0),
-                    labelStyle: new TextStyle(fontSize: 16.0)),
-                style: new TextStyle(fontSize: 20.0, color: Colors.black),
-                controller: _courseClass),
-            TextField(
-                decoration: new InputDecoration(
-                    labelText: 'Course number',
-                    hintText: '1',
-                    contentPadding: new EdgeInsets.only(top: 8.0),
-                    labelStyle: new TextStyle(fontSize: 16.0)),
-                style: new TextStyle(fontSize: 20.0, color: Colors.black),
-                controller: _courseNumber),
-            Padding(
-              padding: EdgeInsets.only(top: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                    padding: new EdgeInsets.only(left: 32.0, right: 32.0),
-                    child: new Text("Generate QR", textScaleFactor: 1.2),
-                    onPressed: () {
-                      print("pressed");
-                      _generateQR();
-                    },
-                    splashColor: ColorsConstants.backgroundColorYellow,
-                    color: ColorsConstants.backgroundColorYellow,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)),
+        minimum: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
+        child: Center(
+          child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                TextField(
+                    cursorColor: ColorsConstants.customBlack,
+                    decoration: new InputDecoration(
+                        labelText: 'Course Name',
+                        hintText: 'ex: OOP',
+                        contentPadding:
+                            new EdgeInsets.only(bottom: 2.0, top: 8.0),
+                        hintStyle: TextStyle(
+                            fontSize: 16.0, color: ColorsConstants.customBlack),
+                        labelStyle: TextStyle(
+                            fontSize: 16.0,
+                            color: ColorsConstants.customBlack)),
+                    style: new TextStyle(fontSize: 16.0, color: Colors.black),
+                    controller: _courseName),
+                TextField(
+                    cursorColor: ColorsConstants.customBlack,
+                    decoration: new InputDecoration(
+                        labelText: 'Course Type',
+                        hintText: 'ex: Laboratory',
+                        contentPadding:
+                            new EdgeInsets.only(bottom: 2.0, top: 8.0),
+                        hintStyle: TextStyle(
+                            fontSize: 16.0, color: ColorsConstants.customBlack),
+                        labelStyle: TextStyle(
+                            fontSize: 16.0,
+                            color: ColorsConstants.customBlack)),
+                    style: new TextStyle(fontSize: 16.0, color: Colors.black),
+                    controller: _courseType),
+                TextField(
+                    cursorColor: ColorsConstants.customBlack,
+                    decoration: new InputDecoration(
+                        labelText: 'Course Class',
+                        hintText: 'ex: 222',
+                        contentPadding:
+                            new EdgeInsets.only(bottom: 2.0, top: 8.0),
+                        hintStyle: TextStyle(
+                            fontSize: 16.0, color: ColorsConstants.customBlack),
+                        labelStyle: TextStyle(
+                            fontSize: 16.0,
+                            color: ColorsConstants.customBlack)),
+                    style: new TextStyle(fontSize: 16.0, color: Colors.black),
+                    controller: _courseClass),
+                TextField(
+                    cursorColor: ColorsConstants.customBlack,
+                    decoration: new InputDecoration(
+                        labelText: 'Course number',
+                        hintText: '1',
+                        contentPadding:
+                            new EdgeInsets.only(bottom: 2.0, top: 8.0),
+                        hintStyle: TextStyle(
+                            fontSize: 16.0, color: ColorsConstants.customBlack),
+                        labelStyle: new TextStyle(
+                            fontSize: 16.0,
+                            color: ColorsConstants.customBlack)),
+                    style: new TextStyle(fontSize: 16.0, color: Colors.black),
+                    controller: _courseNumber),
+                Padding(
+                  padding: EdgeInsets.only(top: 16.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      RaisedButton(
+                        padding: new EdgeInsets.fromLTRB(
+                            _widthDP * 0.05,
+                            _heightDP * 0.01,
+                            _widthDP * 0.05,
+                            _heightDP * 0.01),
+                        child: new Text("Generate QR",
+                            style: TextStyle(
+                                color: ColorsConstants.customBlack,
+                                fontSize: 16.0)),
+                        onPressed: () {
+                          print("pressed");
+                          _generateQR();
+                        },
+                        splashColor: ColorsConstants.backgroundColorYellow,
+                        color: ColorsConstants.backgroundColorYellow,
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
+                      ),
+                      RaisedButton(
+                        padding: new EdgeInsets.fromLTRB(
+                            _widthDP * 0.08,
+                            _heightDP * 0.01,
+                            _widthDP * 0.09,
+                            _heightDP * 0.01),
+                        child: new Text("Clear QR",
+                            style: TextStyle(
+                                color: ColorsConstants.customBlack,
+                                fontSize: 16.0)),
+                        onPressed: () {
+                          _clearQR();
+                        },
+                        splashColor: ColorsConstants.backgroundColorYellow,
+                        color: ColorsConstants.backgroundColorYellow,
+                        shape: new RoundedRectangleBorder(
+                            borderRadius: new BorderRadius.circular(30.0)),
+                      ),
+                    ],
                   ),
-                  RaisedButton(
-                    padding: new EdgeInsets.only(left: 32.0, right: 32.0),
-                    child: new Text("   Clear QR    ", textScaleFactor: 1.2),
-                    onPressed: () {
-                      _clearQR();
-                    },
-                    splashColor: ColorsConstants.backgroundColorYellow,
-                    color: ColorsConstants.backgroundColorYellow,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)),
-                  ),
-                ],
-              ),
+                ),
+                qrWidgets(_widthDP, _heightDP),
+                saveButtonWidget(_widthDP, _heightDP)
+              ],
             ),
-            qrWidgets(),
-            saveButtonWidget()
-          ],
-        ),
-      ),
-    );
+          ),
+        );
   }
 
   _generateQR() async {
+    FocusScope.of(context).requestFocus(new FocusNode());
     if (_courseName.text != '' &&
         _courseType.text != '' &&
         _courseNumber.text != '') {
@@ -144,6 +187,7 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
   }
 
   _clearQR() {
+    FocusScope.of(context).requestFocus(new FocusNode());
     _courseName.clear();
     _courseType.clear();
     _courseNumber.clear();
@@ -173,30 +217,33 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
         });
   }
 
-  Widget qrWidgets() {
+  Widget qrWidgets(double widthDP, double heightDP) {
     if (_enableWidgets) {
       print("${_attendance.toString()},  ${_attendance.attendanceQR}");
       return Expanded(
           child: Center(
-        widthFactor: 250.0,
-        heightFactor: 250.0,
-        child: RepaintBoundary(
-          child: QrImage(
-            data: _attendance.toString(),
-            size: 250.0,
-          ),
-        ),
-      ));
+            widthFactor: widthDP * 0.5,
+            heightFactor: widthDP * 0.5,
+            child: RepaintBoundary(
+              child: QrImage(
+                data: _attendance.toString(),
+                size: widthDP * 0.5,
+              ),
+            ),
+          ));
     }
 
     return Padding(padding: new EdgeInsets.all(0.0));
   }
 
-  Widget saveButtonWidget() {
+  Widget saveButtonWidget(double widthDP, double heightDP) {
     if (_enableWidgets) {
       return RaisedButton(
-        padding: new EdgeInsets.only(left: 140.0, right: 140.0),
-        child: new Text("Save QR", textScaleFactor: 1.2),
+        padding: new EdgeInsets.fromLTRB(
+            widthDP * 0.35, heightDP * 0.01, widthDP * 0.35, heightDP * 0.01),
+        child: new Text("Save QR",
+            style:
+                TextStyle(color: ColorsConstants.customBlack, fontSize: 16.0)),
         onPressed: () {
           _saveQR();
         },
@@ -207,7 +254,7 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
       );
     }
 
-    return Padding(padding: new EdgeInsets.all(0.0));
+    return Container();
   }
 
   @override
