@@ -30,7 +30,7 @@ class MainPageState extends State<MainPage> {
         appBar: AppBar(
           title: new Text(_titleList[_tabIndex],
               textAlign: TextAlign.center,
-              style: new TextStyle(fontSize: 24.0, color: Colors.black87)),
+              style: new TextStyle(fontSize: 32.0, color: Colors.black87)),
           centerTitle: true,
           backgroundColor: ColorsConstants.backgroundColorYellow,
           elevation: 2.0,

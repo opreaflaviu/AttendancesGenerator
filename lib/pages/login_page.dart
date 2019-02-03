@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:attendances/repository/teacher_repository.dart';
 import 'package:attendances/utils/colors_constants.dart';
-import '../model/teacher.dart';
-import '../utils/shared_preferences_utils.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -11,17 +9,10 @@ class LoginPage extends StatefulWidget {
 
 class LoginPageState extends State<LoginPage> {
   static final TextEditingController _name = new TextEditingController();
-  static final TextEditingController _number = new TextEditingController();
+  static final TextEditingController _id = new TextEditingController();
   static final TextEditingController _password = new TextEditingController();
   final GlobalKey<ScaffoldState> _scaffoldState =
       new GlobalKey<ScaffoldState>();
-  String _snackBarText = '';
-
-  void _onChange(String snackBarText) {
-    setState(() {
-      _snackBarText = snackBarText;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -43,20 +34,21 @@ class LoginPageState extends State<LoginPage> {
             automaticallyImplyLeading: false),
         body: new Center(
           child: SingleChildScrollView(
-              physics: NeverScrollableScrollPhysics(),
               child: Container(
             margin: new EdgeInsets.only(right: 32.0, left: 32.0),
             child: new Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 ListTile(
+                  contentPadding: EdgeInsets.all(0.0),
                   leading:
                       Icon(Icons.person, color: ColorsConstants.customBlack),
                   title: TextField(
                       cursorColor: ColorsConstants.customBlack,
                       decoration: new InputDecoration(
                         hintText: 'Name',
-                        contentPadding: new EdgeInsets.only(bottom: 4.0),
+                        contentPadding: new EdgeInsets.only(bottom: 4.0, top:
+                        8.0),
                         hintStyle: TextStyle(
                             fontSize: 16.0, color: ColorsConstants.customBlack),
                         labelStyle: new TextStyle(
@@ -66,13 +58,14 @@ class LoginPageState extends State<LoginPage> {
                       controller: _name),
                 ),
                 ListTile(
+                  contentPadding: EdgeInsets.all(0.0),
                   leading:
                       Icon(Icons.label, color: ColorsConstants.customBlack),
                   title: TextField(
                       cursorColor: ColorsConstants.customBlack,
                       decoration: new InputDecoration(
                           hintText: 'Number',
-                          contentPadding: new EdgeInsets.only(bottom: 4.0),
+                          contentPadding: new EdgeInsets.only(bottom: 4.0, top: 8.0),
                           hintStyle: TextStyle(
                               fontSize: 16.0,
                               color: ColorsConstants.customBlack),
@@ -80,15 +73,16 @@ class LoginPageState extends State<LoginPage> {
                               fontSize: 16.0,
                               color: ColorsConstants.customBlack)),
                       style: new TextStyle(fontSize: 16.0, color: Colors.black),
-                      controller: _number),
+                      controller: _id),
                 ),
                 ListTile(
+                  contentPadding: EdgeInsets.all(0.0),
                   leading: Icon(Icons.lock, color: ColorsConstants.customBlack),
                   title: TextField(
                       cursorColor: ColorsConstants.customBlack,
                       decoration: new InputDecoration(
                           hintText: 'Password',
-                          contentPadding: new EdgeInsets.only(bottom: 4.0),
+                          contentPadding: new EdgeInsets.only(bottom: 4.0, top: 8.0),
                           hintStyle: TextStyle(
                               fontSize: 16.0,
                               color: ColorsConstants.customBlack),
@@ -143,7 +137,7 @@ class LoginPageState extends State<LoginPage> {
 
   void _clearTextFields() {
     _name.clear();
-    _number.clear();
+    _id.clear();
     _password.clear();
   }
 
@@ -153,39 +147,40 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void _onLoginClick() {
-    var teacherResponse =
-        new TeacherRepository().loginTeacher(_number.text, _password.text);
-    teacherResponse.then((student) {
-      print(student);
-      _studentIsValid(student) ? _validStudent(student) : _invalidStudent();
+    var response = TeacherRepository().loginTeacher(_name.text, _password.text,
+        _id.text);
+    response.then((result){
+      _navigateToMainPage();
+    }).catchError((error) {
+      if( error.runtimeType.toString() == 'SocketException') {
+        _showAlertDialog('Error', 'Cannot connect to server');
+      }
+      _showAlertDialog('Error', error.toString());
     });
   }
 
-  void _invalidStudent() {
-    _onChange("Wrong Credentials");
-    _showSnackBar();
-    _clearTextFields();
+  void _navigateToMainPage() {
+    Navigator.of(context).pushNamedAndRemoveUntil('main_page',
+            (Route<dynamic> route) => false);
   }
 
-  void _validStudent(Teacher teacher) {
-    _saveInSharedPrefs(teacher);
-    Navigator.of(context)
-        .pushNamedAndRemoveUntil('main_page', (Route<dynamic> route) => false);
-  }
-
-  bool _studentIsValid(Teacher teacher) => teacher.teacherName == _name.text &&
-          teacher.teacherPassword == _password.text
-      ? true
-      : false;
-
-  void _showSnackBar() {
-    _scaffoldState.currentState
-        .showSnackBar(new SnackBar(content: new Text(_snackBarText)));
-  }
-
-  void _saveInSharedPrefs(Teacher teacher) async {
-    SharedPreferencesUtils sharedPreferencesUtils =
-        new SharedPreferencesUtils();
-    sharedPreferencesUtils.saveTeacher(teacher);
+  Future<Null> _showAlertDialog(String title, String content) {
+    return showDialog<Null>(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 }

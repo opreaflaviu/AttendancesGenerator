@@ -66,7 +66,7 @@ class StudentsAtCoursePage extends StatelessWidget {
                       '${_attendance.courseName}  ${_attendance
                           .courseType} ${_attendance
                           .courseNumber}  Class ${_attendance.courseClass}',
-                      style: TextStyle(fontSize: 14.0, color: Colors.black),
+                      style: TextStyle(fontSize: 16.0, color: Colors.black),
                     ),
                     background: Center(
                       child: QrImage(

@@ -2,9 +2,9 @@ import 'package:attendances/utils/constants.dart';
 
 
 class Teacher {
-  final _teacherId;
-  final _teacherName;
-  final _teacherPassword;
+  final String _teacherId;
+  final String _teacherName;
+  final String _teacherPassword;
 
   Teacher(this._teacherId, this._teacherName, this._teacherPassword);
 

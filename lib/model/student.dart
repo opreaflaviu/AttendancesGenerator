@@ -4,7 +4,7 @@ import 'package:attendances/utils/constants.dart';
 class Student {
   final String _studentId;
   final String _studentName;
-  final int _studentClass;
+  final String _studentClass;
 
   Student(this._studentId, this._studentName, this._studentClass);
 
