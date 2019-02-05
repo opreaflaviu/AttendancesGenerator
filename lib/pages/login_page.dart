@@ -4,15 +4,15 @@ import 'package:attendances/utils/colors_constants.dart';
 
 class LoginPage extends StatefulWidget {
   @override
-  LoginPageState createState() => new LoginPageState();
+  LoginPageState createState() => LoginPageState();
 }
 
 class LoginPageState extends State<LoginPage> {
-  static final TextEditingController _name = new TextEditingController();
-  static final TextEditingController _id = new TextEditingController();
-  static final TextEditingController _password = new TextEditingController();
-  final GlobalKey<ScaffoldState> _scaffoldState =
-      new GlobalKey<ScaffoldState>();
+  static final TextEditingController _name = TextEditingController();
+  static final TextEditingController _id = TextEditingController();
+  static final TextEditingController _password = TextEditingController();
+  final GlobalKey<ScaffoldState> _scaffoldState = GlobalKey<ScaffoldState>();
+  bool passwordVisibility = true;
 
   @override
   Widget build(BuildContext context) {
@@ -20,23 +20,23 @@ class LoginPageState extends State<LoginPage> {
     var _widthDP = _mediaQuery.size.width;
     var _heightDP = _mediaQuery.size.height;
 
-    return new Scaffold(
+    return Scaffold(
         backgroundColor: ColorsConstants.backgroundColorYellow,
         key: _scaffoldState,
-        appBar: new AppBar(
-            title: new Text("Login",
+        appBar: AppBar(
+            title: Text("Login",
                 textAlign: TextAlign.center,
-                style: new TextStyle(
+                style: TextStyle(
                     fontSize: 32.0, color: ColorsConstants.customBlack)),
             centerTitle: true,
             backgroundColor: ColorsConstants.backgroundColorYellow,
             elevation: 2.0,
             automaticallyImplyLeading: false),
-        body: new Center(
+        body: Center(
           child: SingleChildScrollView(
               child: Container(
-            margin: new EdgeInsets.only(right: 32.0, left: 32.0),
-            child: new Column(
+            margin: EdgeInsets.only(right: 32.0, left: 32.0),
+            child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 ListTile(
@@ -45,16 +45,15 @@ class LoginPageState extends State<LoginPage> {
                       Icon(Icons.person, color: ColorsConstants.customBlack),
                   title: TextField(
                       cursorColor: ColorsConstants.customBlack,
-                      decoration: new InputDecoration(
+                      decoration: InputDecoration(
                         hintText: 'Name',
-                        contentPadding: new EdgeInsets.only(bottom: 4.0, top:
-                        8.0),
+                        contentPadding: EdgeInsets.only(bottom: 4.0, top: 8.0),
                         hintStyle: TextStyle(
                             fontSize: 16.0, color: ColorsConstants.customBlack),
-                        labelStyle: new TextStyle(
+                        labelStyle: TextStyle(
                             fontSize: 16.0, color: ColorsConstants.customBlack),
                       ),
-                      style: new TextStyle(fontSize: 16.0, color: Colors.black),
+                      style: TextStyle(fontSize: 16.0, color: Colors.black),
                       controller: _name),
                 ),
                 ListTile(
@@ -63,16 +62,17 @@ class LoginPageState extends State<LoginPage> {
                       Icon(Icons.label, color: ColorsConstants.customBlack),
                   title: TextField(
                       cursorColor: ColorsConstants.customBlack,
-                      decoration: new InputDecoration(
+                      decoration: InputDecoration(
                           hintText: 'Number',
-                          contentPadding: new EdgeInsets.only(bottom: 4.0, top: 8.0),
+                          contentPadding:
+                              EdgeInsets.only(bottom: 4.0, top: 8.0),
                           hintStyle: TextStyle(
                               fontSize: 16.0,
                               color: ColorsConstants.customBlack),
-                          labelStyle: new TextStyle(
+                          labelStyle: TextStyle(
                               fontSize: 16.0,
                               color: ColorsConstants.customBlack)),
-                      style: new TextStyle(fontSize: 16.0, color: Colors.black),
+                      style: TextStyle(fontSize: 16.0, color: Colors.black),
                       controller: _id),
                 ),
                 ListTile(
@@ -80,52 +80,65 @@ class LoginPageState extends State<LoginPage> {
                   leading: Icon(Icons.lock, color: ColorsConstants.customBlack),
                   title: TextField(
                       cursorColor: ColorsConstants.customBlack,
-                      decoration: new InputDecoration(
+                      decoration: InputDecoration(
                           hintText: 'Password',
-                          contentPadding: new EdgeInsets.only(bottom: 4.0, top: 8.0),
+                          contentPadding:
+                              EdgeInsets.only(bottom: 4.0, top: 8.0),
                           hintStyle: TextStyle(
                               fontSize: 16.0,
                               color: ColorsConstants.customBlack),
-                          labelStyle: new TextStyle(
+                          labelStyle: TextStyle(
                               fontSize: 16.0,
-                              color: ColorsConstants.customBlack)),
-                      style: new TextStyle(fontSize: 16.0, color: Colors.black),
-                      obscureText: true,
+                              color: ColorsConstants.customBlack),
+                          suffix: GestureDetector(
+                            child: Icon(this.passwordVisibility
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                            onTap: () {
+                              setState(() {
+                                this.passwordVisibility =
+                                    !this.passwordVisibility;
+                              });
+                            },
+                          )),
+                      style: TextStyle(
+                          fontSize: 16.0, color: ColorsConstants.customBlack),
+                      obscureText: this.passwordVisibility,
                       controller: _password),
                 ),
                 Container(
-                  padding: new EdgeInsets.only(top: 16.0),
+                  padding: EdgeInsets.only(top: 16.0),
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
-                    new RaisedButton(
+                    RaisedButton(
                       highlightColor: ColorsConstants.backgroundColor,
-                      padding: new EdgeInsets.fromLTRB(_widthDP * 0.10,
+                      padding: EdgeInsets.fromLTRB(_widthDP * 0.10,
                           _heightDP * 0.01, _widthDP * 0.10, _heightDP * 0.01),
-                      child: new Text("Back",
+                      child: Text("Back",
                           style: TextStyle(
                               color: ColorsConstants.customBlack,
                               fontSize: 16.0)),
                       onPressed: (() => _onBackClick(context)),
                       splashColor: Colors.white,
                       color: Colors.white,
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
                     ),
-                    new RaisedButton(
+                    RaisedButton(
                       highlightColor: ColorsConstants.backgroundColor,
-                      padding: new EdgeInsets.fromLTRB(_widthDP * 0.10,
+                      padding: EdgeInsets.fromLTRB(_widthDP * 0.10,
                           _heightDP * 0.01, _widthDP * 0.10, _heightDP * 0.01),
-                      child: new Text("Login",
+                      child: Text("Login",
                           style: TextStyle(
                               color: ColorsConstants.customBlack,
                               fontSize: 16.0)),
                       onPressed: _onLoginClick,
                       splashColor: Colors.white,
                       color: Colors.white,
-                      shape: new RoundedRectangleBorder(
-                          borderRadius: new BorderRadius.circular(30.0)),
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(30.0)),
                     )
                   ],
                 )
@@ -147,12 +160,12 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void _onLoginClick() {
-    var response = TeacherRepository().loginTeacher(_name.text, _password.text,
-        _id.text);
-    response.then((result){
+    var response =
+        TeacherRepository().loginTeacher(_name.text, _password.text, _id.text);
+    response.then((result) {
       _navigateToMainPage();
     }).catchError((error) {
-      if( error.runtimeType.toString() == 'SocketException') {
+      if (error.runtimeType.toString() == 'SocketException') {
         _showAlertDialog('Error', 'Cannot connect to server');
       }
       _showAlertDialog('Error', error.toString());
@@ -160,8 +173,8 @@ class LoginPageState extends State<LoginPage> {
   }
 
   void _navigateToMainPage() {
-    Navigator.of(context).pushNamedAndRemoveUntil('main_page',
-            (Route<dynamic> route) => false);
+    Navigator.of(context)
+        .pushNamedAndRemoveUntil('main_page', (Route<dynamic> route) => false);
   }
 
   Future<Null> _showAlertDialog(String title, String content) {
@@ -170,17 +183,25 @@ class LoginPageState extends State<LoginPage> {
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(title),
-            content: Text(content),
+            title: Text(title,
+                style: TextStyle(
+                    fontSize: 24.0, color: ColorsConstants.customBlack,
+                    fontWeight: FontWeight.bold)),
+            content: Text(content,
+                style: TextStyle(
+                    fontSize: 20.0, color: ColorsConstants.customBlack)),
             actions: <Widget>[
               FlatButton(
-                child: Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
+                  child: Text('Ok',
+                      style: TextStyle(
+                          fontSize: 16.0, color: ColorsConstants.customBlack)),
+                  onPressed: (){
+                    Navigator.of(context).pop();
+                  }
               ),
             ],
           );
-        });
+        }
+    );
   }
 }

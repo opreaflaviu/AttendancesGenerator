@@ -172,15 +172,22 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
         barrierDismissible: true,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text(title),
-            content: Text(content),
+            title: Text(title,
+                style: TextStyle(
+                    fontSize: 24.0,
+                    color: ColorsConstants.customBlack,
+                    fontWeight: FontWeight.bold)),
+            content: Text(content,
+                style: TextStyle(
+                    fontSize: 20.0, color: ColorsConstants.customBlack)),
             actions: <Widget>[
               FlatButton(
-                child: Text('Ok'),
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-              ),
+                  child: Text('Ok',
+                      style: TextStyle(
+                          fontSize: 16.0, color: ColorsConstants.customBlack)),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  }),
             ],
           );
         });

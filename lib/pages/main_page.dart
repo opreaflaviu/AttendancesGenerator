@@ -28,9 +28,9 @@ class MainPageState extends State<MainPage> {
         resizeToAvoidBottomPadding: false,
         body: _tabItem[_tabIndex],
         appBar: AppBar(
-          title: new Text(_titleList[_tabIndex],
+          title: Text(_titleList[_tabIndex],
               textAlign: TextAlign.center,
-              style: new TextStyle(fontSize: 32.0, color: Colors.black87)),
+              style: TextStyle(fontSize: 32.0, color: Colors.black87)),
           centerTitle: true,
           backgroundColor: ColorsConstants.backgroundColorYellow,
           elevation: 2.0,
