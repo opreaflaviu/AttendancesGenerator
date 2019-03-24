@@ -165,10 +165,18 @@ class LoginPageState extends State<LoginPage> {
     response.then((result) {
       _navigateToMainPage();
     }).catchError((error) {
-      if (error.runtimeType.toString() == 'SocketException') {
-        _showAlertDialog('Error', 'Cannot connect to server');
+      switch(error.runtimeType.toString()) {
+        case 'SocketException': {
+            _showAlertDialog('Error', 'Cannot connect to server');
+        }
+        break;
+        case 'CustomError': {
+          _showAlertDialog('Error', error.toString());
+        }
+        break;
+        default:
+          break;
       }
-      _showAlertDialog('Error', error.toString());
     });
   }
 

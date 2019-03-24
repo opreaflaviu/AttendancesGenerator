@@ -3,34 +3,34 @@
 import 'package:attendances/utils/constants.dart';
 
 class Course {
-  final _name;
-  final _type;
-  final _teacher;
-  final _teacherId;
-  final _createdAt;
-  final _number;
+  final String _name;
+  final String _type;
+  final String _teacher;
+  final String _teacherId;
+  final String _createdAt;
+  final int _number;
 
   Course(this._name, this._type, this._teacher, this._teacherId, this._createdAt, this._number);
 
 
   get name => _name;
 
-  Course.fromJSON(Map course):
+  Course.fromJson(Map course):
     this._name = course[Constants.courseName],
     this._type = course[Constants.courseType],
     this._teacher = course[Constants.courseTeacher],
     this._teacherId = course[Constants.courseTeacherId],
     this._createdAt = course[Constants.courseCreatedAt],
-    this._number = course[Constants.courseNumber];
+    this._number = int.parse(course[Constants.courseNumber]);
 
-  Map<String, dynamic> toJSON() {
+  Map<String, dynamic> toJson() {
     Map map = Map<String, dynamic>();
     map[Constants.courseName] = this._name;
     map[Constants.courseType] = this._type;
     map[Constants.courseTeacher] = this._teacher;
     map[Constants.courseTeacherId] = this._teacherId;
     map[Constants.courseCreatedAt] = this._createdAt;
-    map[Constants.courseNumber] = this._number;
+    map[Constants.courseNumber] = this._number.toString();
     return map;
   }
 

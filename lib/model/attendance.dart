@@ -29,7 +29,7 @@ class Attendance {
 
   String get attendanceQR => attendanceQr;
 
-  Map<String, dynamic> toJSON() {
+  Map<String, dynamic> toJson() {
     var map = Map<String, dynamic>();
     map[Constants.courseName] = this._courseName;
     map[Constants.courseType] = this._courseType;
@@ -43,7 +43,7 @@ class Attendance {
     return map;
   }
 
-  Attendance.fromJSON(Map attendance):
+  Attendance.fromJson(Map attendance):
     this._courseName = attendance[Constants.courseName],
     this._courseType = attendance[Constants.courseType],
     this._courseClass = attendance[Constants.courseClass],

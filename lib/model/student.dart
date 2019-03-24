@@ -14,12 +14,12 @@ class Student {
 
   get studentClass => this._studentClass;
 
-  Student.fromMap(Map map):
+  Student.fromJson(Map map):
     this._studentName = map[Constants.studentName],
     this._studentId = map[Constants.studentId],
     this._studentClass = map[Constants.studentClass];
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     var map = new Map<String, dynamic>();
     map[Constants.studentName] = this._studentName;
     map[Constants.studentId] = this._studentId;

@@ -15,7 +15,7 @@ class AttendanceRepository {
     var response = await http.post(
         Uri.encodeFull(Constants.rootApi + '/generated-attendance/add'),
         headers: {"Accept": "application/json"},
-        body: {'attendance': json.encode(attendance.toJSON())});
+        body: {'attendance': json.encode(attendance.toJson())});
 
     if (response.statusCode == 200) {
       return true;
@@ -42,7 +42,7 @@ class AttendanceRepository {
         for (var attendance in data['attendances']) {
           var courseDate = attendance[Constants.courseCreatedAt];
           var courseType = attendance[Constants.courseType];
-          var courseNumber = attendance[Constants.courseNumber];
+          var courseNumber = int.parse(attendance[Constants.courseNumber]);
           var courseTeacher = attendance[Constants.courseTeacher];
           var course = Course(null, courseType, courseTeacher, null, courseDate, courseNumber);
           courseAttendance.addCourse(course);
@@ -70,7 +70,7 @@ class AttendanceRepository {
 
       var attendanceList = List<Attendance>();
       for (var data in responseData['result']) {
-        attendanceList.add(Attendance.fromJSON(data));
+        attendanceList.add(Attendance.fromJson(data));
       }
       return attendanceList;
     } else {
@@ -91,13 +91,40 @@ class AttendanceRepository {
 
       var responseData = jsonDecode(response.body);
       for (var data in responseData['result']) {
-        studentAttendanceList.add(StudentAttendance.fromJSON(data));
+        studentAttendanceList.add(StudentAttendance.fromJson(data));
       }
       return studentAttendanceList;
 
     } else {
       throw Exception("Error");
     }
+  }
+  
+  Future<bool> updateStudentGrade(String attendanceQR, String studentId, int
+  grade) async {
+    var response = await http.patch(
+      Uri.encodeFull(Constants.rootApi + '/attendance/update-student-attendance'),
+      headers: {
+        "Accept": "application/json"
+      },
+      body: {
+        Constants.attendanceQR: "$attendanceQR",
+        Constants.studentId: "$studentId",
+        Constants.grade: "$grade"
+      }
+    );
 
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      var status = responseData['result'];
+      if (status == 'true') {
+        return true;
+      } else {
+        throw Exception("Error");
+      }
+
+    } else {
+      throw Exception("Error");
+    }
   }
 }

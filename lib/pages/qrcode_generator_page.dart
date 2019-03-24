@@ -118,10 +118,7 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage>
                             style: TextStyle(
                                 color: ColorsConstants.customBlack,
                                 fontSize: 16.0)),
-                        onPressed: () {
-                          print("pressed");
-                          _generateQR();
-                        },
+                        onPressed: _generateQR,
                         splashColor: ColorsConstants.backgroundColorYellow,
                         color: ColorsConstants.backgroundColorYellow,
                         shape: new RoundedRectangleBorder(

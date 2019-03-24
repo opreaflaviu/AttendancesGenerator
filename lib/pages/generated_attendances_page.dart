@@ -48,11 +48,12 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                       MaterialPageRoute(builder: (context) => StudentsAtCoursePage(attendance)));
                 },
                 child: Card(
-                  margin: EdgeInsets.fromLTRB(10.0, 10.0, 10.0, 0.0),
+                  margin: EdgeInsets.fromLTRB(4.0, 10.0, 4.0, 0.0),
                   shape: new RoundedRectangleBorder(
+
                       borderRadius: new BorderRadius.circular(10.0)),
-                  elevation: 1.5,
-                  color: ColorsConstants.backgroundColorBlue,
+                  elevation: 1.0,
+                  color: Color.fromRGBO(140, 63, 150, 100.0),
                   child: Container(
                     margin: EdgeInsets.only(top: 8.0, bottom: 12.0),
                     child: Column(
@@ -60,10 +61,13 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                       children: <Widget>[
                         Text(
                           attendance.courseName,
-                          style: TextStyle(fontSize: 20.0),
+                          style: TextStyle(fontSize: 20.0,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white)
                         ),
+                        Divider(color: ColorsConstants.customBlack, height: 8.0,),
                         Padding(
-                          padding: EdgeInsets.only(top: 14.0),
+                          padding: EdgeInsets.only(top: 8.0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: <Widget>[
@@ -79,7 +83,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                               ? CustomIcons.computer
                                               : CustomIcons.pen,
                                           size: 18.0,
-                                          color: Colors.black38),
+                                          color: ColorsConstants.customBlack),
                                       Padding(
                                           padding: EdgeInsets.only(right: 8.0)),
                                       Text(
@@ -87,7 +91,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               color:
-                                                  ColorsConstants.ColorBlue)),
+                                                  ColorsConstants.customBlack)),
                                     ],
                                   ),
                                   Padding(padding: EdgeInsets.all(6.0)),
@@ -96,7 +100,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Icon(CustomIcons.calendar,
-                                          size: 18.0, color: Colors.black38),
+                                          size: 18.0, color: ColorsConstants.customBlack),
                                       Padding(
                                           padding: EdgeInsets.only(right: 8.0)),
                                       Text(
@@ -104,7 +108,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               color:
-                                                  ColorsConstants.ColorBlue)),
+                                              ColorsConstants.customBlack)),
                                     ],
                                   ),
                                 ],
@@ -117,14 +121,14 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Icon(Icons.people,
-                                          size: 18.0, color: Colors.black38),
+                                          size: 18.0, color: ColorsConstants.customBlack),
                                       Padding(
                                           padding: EdgeInsets.only(right: 8.0)),
                                       Text("${attendance.courseClass}",
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               color:
-                                                  ColorsConstants.ColorBlue)),
+                                              ColorsConstants.customBlack)),
                                     ],
                                   ),
                                   Padding(padding: EdgeInsets.all(6.0)),
@@ -133,7 +137,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                         CrossAxisAlignment.start,
                                     children: <Widget>[
                                       Icon(Icons.access_time,
-                                          size: 18.0, color: Colors.black38),
+                                          size: 18.0, color: ColorsConstants.customBlack),
                                       Padding(
                                           padding: EdgeInsets.only(right: 8.0)),
                                       Text(
@@ -141,7 +145,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                                           style: TextStyle(
                                               fontSize: 16.0,
                                               color:
-                                                  ColorsConstants.ColorBlue)),
+                                              ColorsConstants.customBlack)),
                                     ],
                                   ),
                                 ],
@@ -193,13 +197,6 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
         });
   }
 
-  openStudentListPage(Attendance attendance) {
-    Navigator.push(
-        context,
-        MaterialPageRoute(
-            builder: (context) => StudentsAtCoursePage(attendance)));
-  }
-
   Future<bool> _getAttendanceOnRefresh() async {
     await new Future.delayed(Duration(seconds: 1));
     _getGeneratedAttendances();
@@ -234,4 +231,6 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
   onLoadAttendancesError() {
     _showAlertDialog('Error', 'Cannot fetch data');
   }
+
+
 }

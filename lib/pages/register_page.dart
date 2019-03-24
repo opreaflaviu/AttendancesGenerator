@@ -216,7 +216,18 @@ class RegisterPageState extends State<RegisterPage> {
           Navigator.of(context).pushNamedAndRemoveUntil(
               'main_page', (Route<dynamic> route) => false);
         }).catchError((error) {
-          _showAlertDialog('Error', error.toString());
+          switch(error.runtimeType.toString()) {
+            case 'SocketException': {
+              _showAlertDialog('Error', 'Cannot connect to server');
+            }
+            break;
+            case 'CustomError': {
+              _showAlertDialog('Error', error.toString());
+            }
+            break;
+            default:
+              break;
+          }
         });
       } else {
         _showAlertDialog('Error', 'Invalid password');

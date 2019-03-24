@@ -14,12 +14,12 @@ class Teacher {
 
   String get teacherPassword => _teacherPassword;
 
-  Teacher.fromMap(Map map):
+  Teacher.fromJson(Map map):
     this._teacherName = map[Constants.teacherName],
     this._teacherId = map[Constants.teacherId],
     this._teacherPassword = map[Constants.teacherPassword];
 
-  Map<String, dynamic> toMap() {
+  Map<String, dynamic> toJson() {
     var map = new Map<String, dynamic>();
     map[Constants.teacherName] = this._teacherName;
     map[Constants.teacherId] = this._teacherId;

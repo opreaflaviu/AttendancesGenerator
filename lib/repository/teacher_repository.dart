@@ -22,7 +22,6 @@ class TeacherRepository {
 
     if (response.statusCode == 200) {
       Map responseData = json.decode(response.body);
-      print("response data: $responseData");
       if (responseData['result'] == 'false') {
         throw CustomError('User does not exists');
       } else {
@@ -53,7 +52,6 @@ class TeacherRepository {
           Constants.teacherPassword: "${teacher.teacherPassword}",
           Constants.teacherId: "${teacher.teacherId}"
         });
-    print("response code: ${response.statusCode.toString()}");
     if (response.statusCode == 200) {
       Map responseData = json.decode(response.body);
       if(responseData['result'] == 'false') {
