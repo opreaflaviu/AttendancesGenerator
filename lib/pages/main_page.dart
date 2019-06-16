@@ -1,6 +1,10 @@
+
+import 'package:attendances/blocs/bloc_history_page.dart';
+import 'package:attendances/blocs/bloc_provider/bloc_provider.dart';
+import 'package:attendances/blocs/bloc_qrcode_generator_page.dart';
 import 'package:attendances/model/attendance.dart';
 import 'package:attendances/model/course.dart';
-import 'package:attendances/pages/generated_attendances_page.dart';
+import 'package:attendances/pages/history_page/history_page.dart';
 import 'package:attendances/repository/attendance_repository.dart';
 import 'package:attendances/utils/custom_icons.dart';
 import 'package:flutter/material.dart';
@@ -16,8 +20,13 @@ class MainPage extends StatefulWidget {
 class MainPageState extends State<MainPage> {
   int _tabIndex = 0;
   final List<Widget> _tabItem = [
-    QRCodeGeneratorPage(),
-    GeneratedAttendancesPage(),
+    BlocProvider(
+      bloc: BlocQRCodeGeneratorPage(),
+      child: QRCodeGeneratorPage()),
+    BlocProvider(
+      bloc: BlocHistoryPage(),
+      child: HistoryPage(),
+    )
   ];
 
   final List<String> _titleList = ['Attendances', 'History'];
@@ -30,13 +39,13 @@ class MainPageState extends State<MainPage> {
         appBar: AppBar(
           title: Text(_titleList[_tabIndex],
               textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 32.0, color: Colors.black87)),
+              style: TextStyle(fontSize: 32.0, color: ColorsConstants.customBlack)),
           centerTitle: true,
           backgroundColor: ColorsConstants.backgroundColorYellow,
           elevation: 2.0,
           actions: <Widget>[
             IconButton(
-                icon: Icon(Icons.search, color: Colors.black87),
+                icon: Icon(Icons.search, color: ColorsConstants.customBlack),
                 onPressed: () {
                   showSearch(
                       context: context, delegate: StudentAttendanceSearch());
@@ -56,7 +65,8 @@ class MainPageState extends State<MainPage> {
                       icon: Icon(CustomIcons.qr_code),
                       title: Text('Generator')),
                   BottomNavigationBarItem(
-                      icon: Icon(Icons.history), title: Text('History')),
+                      icon: Icon(Icons.history),
+                      title: Text('History')),
                 ])));
   }
 

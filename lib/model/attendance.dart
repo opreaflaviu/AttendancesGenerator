@@ -2,14 +2,14 @@ import 'package:attendances/utils/constants.dart';
 
 class Attendance {
 
-  final String _courseName;
-  final String _courseType;
-  final String _courseTeacher;
-  final String _courseTeacherId;
-  final String _courseCreatedAt;
-  final String _courseNumber;
-  final String _courseClass;
-  final String attendanceQr;
+  String _courseName;
+  String _courseType;
+  String _courseTeacher;
+  String _courseTeacherId;
+  String _courseCreatedAt;
+  String _courseNumber;
+  String _courseClass;
+  String attendanceQr;
 
   Attendance(this._courseName, this._courseType, this._courseClass, this._courseTeacher, this._courseTeacherId, this._courseCreatedAt, this._courseNumber, {this.attendanceQr});
 
@@ -28,6 +28,34 @@ class Attendance {
   String get courseClass => _courseClass;
 
   String get attendanceQR => attendanceQr;
+
+  set courseType(String value) {
+    _courseType = value;
+  }
+
+  set courseTeacher(String value) {
+    _courseTeacher = value;
+  }
+
+  set courseTeacherId(String value) {
+    _courseTeacherId = value;
+  }
+
+  set courseCreatedAt(String value) {
+    _courseCreatedAt = value;
+  }
+
+  set courseNumber(String value) {
+    _courseNumber = value;
+  }
+
+  set courseClass(String value) {
+    _courseClass = value;
+  }
+
+  set courseName(String value) {
+    _courseName = value;
+  }
 
   Map<String, dynamic> toJson() {
     var map = Map<String, dynamic>();
@@ -57,5 +85,4 @@ class Attendance {
   String toString() {
     return "$courseName+$courseType+$courseClass+$courseTeacher+$courseTeacherId+$courseCreatedAt+$courseNumber";
   }
-
 }

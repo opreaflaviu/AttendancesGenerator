@@ -50,7 +50,8 @@ class TeacherRepository {
         body: {
           Constants.teacherName: "${teacher.teacherName}",
           Constants.teacherPassword: "${teacher.teacherPassword}",
-          Constants.teacherId: "${teacher.teacherId}"
+          Constants.teacherId: "${teacher.teacherId}",
+          Constants.teacherCourses: "${teacher.coursesList}"
         });
     if (response.statusCode == 200) {
       Map responseData = json.decode(response.body);
@@ -64,6 +65,55 @@ class TeacherRepository {
     }
   }
 
+  Future<bool> addCourse(String teacherId, String courseName) async {
+    var response = await http.post(
+      Uri.encodeFull(Constants.rootApi + '/teachers/$teacherId/courses/add'),
+      headers: {
+        "Accept": "application/json"
+      },
+      body: {
+        Constants.courseName: '$courseName'
+      }
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> deleteCourse(String teacherId, String courseName) async {
+    var response = await http.post(
+        Uri.encodeFull(Constants.rootApi + '/teachers/$teacherId/courses/delete'),
+        headers: {
+          "Accept": "application/json"
+        },
+        body: {
+          Constants.courseName: '$courseName'
+        }
+    );
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<Set<String>> getTeachersCourses(String teacherId) async {
+    var response = await http.get(
+        Uri.encodeFull(Constants.rootApi + '/teachers/$teacherId/courses'),
+        headers: {
+          "Accept": "application/json"
+        }
+    );
+    if (response.statusCode == 200) {
+      Map responseData = json.decode(response.body);
+      var courseList = responseData['result'];
+      var courseSet = fromListToSet(courseList);
+      print("course set: $courseSet");
+      return courseSet;
+    }
+    throw Exception("Error");
+  }
+
   bool _validLogin(teacherPassword, passwordResponse, teacherName, nameResponse) {
     return (Password.verify(teacherPassword, passwordResponse) && teacherName ==
         nameResponse);
@@ -72,5 +122,13 @@ class TeacherRepository {
   void _saveInSharedPrefs(Teacher teacher) async {
     SharedPreferencesUtils sharedPreferencesUtils = SharedPreferencesUtils();
     sharedPreferencesUtils.saveTeacher(teacher);
+  }
+
+  Set<String> fromListToSet(List<dynamic> list) {
+    var set = Set<String>();
+    list.forEach((element) {
+      set.add(element.toString());
+    });
+    return set;
   }
 }

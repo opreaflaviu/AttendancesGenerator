@@ -2,7 +2,6 @@ import 'package:attendances/model/attendance.dart';
 import 'package:attendances/model/student_attendance.dart';
 import 'package:attendances/repository/attendance_repository.dart';
 import 'package:attendances/utils/colors_constants.dart';
-import 'package:attendances/utils/custom_icons.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -24,9 +23,13 @@ class _StudentsAtCoursePageState extends State<StudentsAtCoursePage> {
 
   @override
   Widget build(BuildContext context) {
+     return _content();
+  }
+
+  Widget _content() {
     return FutureBuilder(
         future:
-            _attendanceRepository.getStudentsAtCourse(_attendance.attendanceQr),
+        _attendanceRepository.getStudentsAtCourse(_attendance.attendanceQr),
         initialData: [],
         builder: (context, snapshot) {
           switch (snapshot.connectionState) {
@@ -50,7 +53,7 @@ class _StudentsAtCoursePageState extends State<StudentsAtCoursePage> {
                   ),
                 );
               } else
-                return _displayList(snapshot.data);
+                  return _displayList(snapshot.data);
           }
         });
   }
@@ -140,7 +143,6 @@ class _StudentsAtCoursePageState extends State<StudentsAtCoursePage> {
                       _showAlertDialog(context, 'Update or modify ',
                           studentAttendance.grade.grade)
                           .then((int grade) {
-                        print("new grade: $grade");
                         _attendanceRepository.updateStudentGrade
                           (studentAttendance.attendanceQR, studentAttendance
                             .student.studentId, grade);

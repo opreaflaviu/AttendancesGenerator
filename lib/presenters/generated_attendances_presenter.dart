@@ -9,8 +9,8 @@ class GeneratedAttendancesPresenter {
     _attendanceRepository = AttendanceRepository();
   }
 
-  getGeneratedAttendances() {
-    _attendanceRepository.getGeneratedAttendances()
+  getGeneratedAttendances(String course) {
+    _attendanceRepository.getGeneratedAttendances(course)
         .then((generatedAttendanceList) => _attendancesView.onLoadAttendancesComplete(generatedAttendanceList))
         .catchError((error) => _attendancesView.onLoadAttendancesError());
   }

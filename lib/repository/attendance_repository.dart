@@ -18,7 +18,11 @@ class AttendanceRepository {
         body: {'attendance': json.encode(attendance.toJson())});
 
     if (response.statusCode == 200) {
-      return true;
+      var responseData = jsonDecode(response.body);
+      if (responseData['result'] == 'true')
+        return true;
+      else
+        return false;
     } else {
       throw Exception("Error");
     }
@@ -55,12 +59,12 @@ class AttendanceRepository {
     }
   }
 
-  Future<List<Attendance>> getGeneratedAttendances() async {
+  Future<List<Attendance>> getGeneratedAttendances(String course) async {
     SharedPreferences sharedPreferences = await SharedPreferences.getInstance();
     var teacherId = sharedPreferences.get(Constants.teacherId);
 
     var response = await http.get(
-        Uri.encodeFull(Constants.rootApi + '/generated-attendance/$teacherId'),
+        Uri.encodeFull(Constants.rootApi + '/generated-attendance/$teacherId/$course'),
         headers: {
           "Accept": "application/json"
         });
