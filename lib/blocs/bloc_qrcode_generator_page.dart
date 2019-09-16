@@ -41,10 +41,12 @@ class BlocQRCodeGeneratorPage extends BlocBase {
   Sink<Widget> get _saveQrButtonSink => _saveQrButtonReplaySubject.sink;
   Stream<Widget> get _saveQrButtonStream => _saveQrButtonReplaySubject.stream;
 
+  var _selectedCourseName = "";
   ReplaySubject<String> _selectedCourseNameReplaySubject;
   Sink<String> get _selectedCourseNameSink => _selectedCourseNameReplaySubject.sink;
   Stream<String> get _selectedCourseNameStream => _selectedCourseNameReplaySubject.stream;
 
+  var _selectedCourseType = "";
   ReplaySubject<String> _selectedCourseTypeReplaySubject;
   Sink<String> get _selectedCourseTypeSink => _selectedCourseTypeReplaySubject.sink;
   Stream<String> get _selectedCourseTypeStream => _selectedCourseTypeReplaySubject.stream;
@@ -57,7 +59,7 @@ class BlocQRCodeGeneratorPage extends BlocBase {
     _saveQrButtonReplaySubject = ReplaySubject<Widget>();
     _selectedCourseNameReplaySubject = ReplaySubject<String>();
     _selectedCourseTypeReplaySubject = ReplaySubject<String>();
-    _getCoursesFromBeckend();
+    _getCoursesFromBackend();
   }
 
   @override
@@ -70,7 +72,7 @@ class BlocQRCodeGeneratorPage extends BlocBase {
     _selectedCourseTypeReplaySubject.close();
   }
 
-  _getCoursesFromBeckend() async {
+  _getCoursesFromBackend() async {
     var teacherId = await _getFromSharedPrefs(Constants.teacherId);
     if(_teacherCoursesList.isEmpty) {
       _teacherCoursesList = await _teachersRepository.getTeachersCourses(teacherId);
@@ -96,13 +98,15 @@ class BlocQRCodeGeneratorPage extends BlocBase {
   }
 
   setCourseName(String courseName) {
-    _attendance.courseName = courseName;
-    _selectedCourseNameSink.add(courseName);
+    _selectedCourseName = courseName;
+    _attendance.courseName = _selectedCourseName;
+    _selectedCourseNameSink.add(_selectedCourseName);
   }
 
   setCourseType(String courseType) {
-    _attendance.courseType = courseType;
-    _selectedCourseTypeSink.add(courseType);
+    _selectedCourseType = courseType;
+    _attendance.courseType = _selectedCourseType;
+    _selectedCourseTypeSink.add(_selectedCourseType);
   }
 
   setCourseNumber(String courseNumber) {
@@ -129,12 +133,12 @@ class BlocQRCodeGeneratorPage extends BlocBase {
   }
 
   Stream<String> getSelectedCourseName() {
-    _selectedCourseNameSink.add("");
+    _selectedCourseNameSink.add(_selectedCourseName);
     return _selectedCourseNameStream;
   }
 
   Stream<String> getSelectedCourseType() {
-    _selectedCourseTypeSink.add("");
+    _selectedCourseTypeSink.add(_selectedCourseType);
     return _selectedCourseTypeStream;
   }
 
