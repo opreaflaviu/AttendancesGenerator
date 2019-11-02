@@ -1,6 +1,7 @@
 import 'package:attendances/blocs/bloc_provider/bloc_provider.dart';
 import 'package:attendances/blocs/bloc_qrcode_generator_page.dart';
 import 'package:flutter/material.dart';
+
 import '../utils/colors_constants.dart';
 
 class QRCodeGeneratorPage extends StatefulWidget {
@@ -9,8 +10,8 @@ class QRCodeGeneratorPage extends StatefulWidget {
 }
 
 class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
-  var _courseClass = TextEditingController();
-  var _courseNumber = TextEditingController();
+  final _courseClass = TextEditingController();
+  final _courseNumber = TextEditingController();
 
   var _blocQrCodeGeneratorPage;
 
@@ -69,7 +70,13 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
                         fontSize: 16.0, color: ColorsConstants.customBlack),
                     labelStyle: TextStyle(
                         fontSize: 16.0,
-                        color: ColorsConstants.customBlack)),
+                        color: ColorsConstants.customBlack),
+                    focusedBorder: new UnderlineInputBorder(
+                        borderSide: new BorderSide(
+                            color: Colors.black26,
+                            width: 1.5
+                        )
+                    )),
                 style: new TextStyle(fontSize: 16.0, color: Colors.black),
                 controller: _courseClass
             ),
@@ -84,7 +91,13 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
                         fontSize: 16.0, color: ColorsConstants.customBlack),
                     labelStyle: new TextStyle(
                         fontSize: 16.0,
-                        color: ColorsConstants.customBlack)),
+                        color: ColorsConstants.customBlack),
+                    focusedBorder: new UnderlineInputBorder(
+                        borderSide: new BorderSide(
+                            color: Colors.black26,
+                            width: 1.5
+                        )
+                    )),
                 style: new TextStyle(fontSize: 16.0, color: Colors.black),
                 controller: _courseNumber),
             Padding(
@@ -157,6 +170,10 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
   Widget _coursesMenu(Set<String> data) {
     List<DropdownMenuItem<String>> listDrop = [];
 
+    listDrop.add(DropdownMenuItem(
+      child: Text("Select course name", style: TextStyle(fontSize: 16)),
+      value: "",
+    ));
     data.forEach((element) {
       listDrop.add(DropdownMenuItem(
         child: Text(element),
@@ -184,6 +201,10 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
   Widget _courseTypesMenu(List<String> data) {
     List<DropdownMenuItem<String>> listDrop = [];
 
+    listDrop.add(DropdownMenuItem(
+      child: Text("Select course type", style: TextStyle(fontSize: 16)),
+      value: "",
+    ));
     data.forEach((element) {
       listDrop.add(DropdownMenuItem(
         child: Text(element),
@@ -195,7 +216,7 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
         child: StreamBuilder(
             stream: _blocQrCodeGeneratorPage.getSelectedCourseType(),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-              return DropdownButton(
+              return DropdownButton<String>(
                   value: snapshot.data,
                   items: listDrop,
                   hint: Text("Select course type",
@@ -213,7 +234,7 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
     FocusScope.of(context).requestFocus(new FocusNode());
     _blocQrCodeGeneratorPage.setCourseName("");
     _blocQrCodeGeneratorPage.setCourseType("");
-    _blocQrCodeGeneratorPage.setCourseNumber("");
+    _blocQrCodeGeneratorPage.setCourseNumber(0);
     _blocQrCodeGeneratorPage.setCourseClass("");
     _courseClass.text = "";
     _courseNumber.text = "";
@@ -242,7 +263,7 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
 
   void _generateQR() {
     _blocQrCodeGeneratorPage.setCourseClass(_courseClass.text);
-    _blocQrCodeGeneratorPage.setCourseNumber(_courseNumber.text);
+    _blocQrCodeGeneratorPage.setCourseNumber(int.parse(_courseNumber.text));
     _blocQrCodeGeneratorPage.setQrWidgetAndSaveButton();
   }
 }

@@ -2,15 +2,17 @@
 import 'package:attendances/blocs/bloc_history_page.dart';
 import 'package:attendances/blocs/bloc_provider/bloc_provider.dart';
 import 'package:attendances/blocs/bloc_qrcode_generator_page.dart';
+import 'package:attendances/blocs/bloc_statistics_page.dart';
 import 'package:attendances/model/attendance.dart';
 import 'package:attendances/model/course.dart';
 import 'package:attendances/pages/history_page/history_page.dart';
+import 'package:attendances/pages/statistics_page.dart';
 import 'package:attendances/repository/attendance_repository.dart';
 import 'package:attendances/utils/custom_icons.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/colors_constants.dart';
 import '../pages/qrcode_generator_page.dart';
+import '../utils/colors_constants.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -25,11 +27,13 @@ class MainPageState extends State<MainPage> {
       child: QRCodeGeneratorPage()),
     BlocProvider(
       bloc: BlocHistoryPage(),
-      child: HistoryPage(),
-    )
+      child: HistoryPage()),
+    BlocProvider(
+        bloc: BlocStatisticsPage(),
+        child: StatisticsPage()),
   ];
 
-  final List<String> _titleList = ['Attendances', 'History'];
+  final List<String> _titleList = ['Attendances', 'History', 'Statistics'];
 
   @override
   Widget build(BuildContext context) {
@@ -67,6 +71,9 @@ class MainPageState extends State<MainPage> {
                   BottomNavigationBarItem(
                       icon: Icon(Icons.history),
                       title: Text('History')),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.insert_chart),
+                      title: Text('Statistics')),
                 ])));
   }
 

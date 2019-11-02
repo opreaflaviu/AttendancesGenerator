@@ -21,7 +21,7 @@ class BlocQRCodeGeneratorPage extends BlocBase {
   var _attendanceRepository = AttendanceRepository();
   var _teachersRepository = TeacherRepository();
 
-  var _attendance = Attendance('', '', '', '', '', '', '');
+  var _attendance = Attendance('', '', '', '', '', '', 0);
 
   var _teacherCoursesList = Set<String>();
   ReplaySubject<Set<String>> _teacherCoursesReplaySubject;
@@ -74,9 +74,7 @@ class BlocQRCodeGeneratorPage extends BlocBase {
 
   _getCoursesFromBackend() async {
     var teacherId = await _getFromSharedPrefs(Constants.teacherId);
-    if(_teacherCoursesList.isEmpty) {
-      _teacherCoursesList = await _teachersRepository.getTeachersCourses(teacherId);
-    }
+    _teacherCoursesList = await _teachersRepository.getTeachersCourses(teacherId);
     _teacherCoursesSink.add(_teacherCoursesList);
   }
 
@@ -109,7 +107,7 @@ class BlocQRCodeGeneratorPage extends BlocBase {
     _selectedCourseTypeSink.add(_selectedCourseType);
   }
 
-  setCourseNumber(String courseNumber) {
+  setCourseNumber(int courseNumber) {
     _attendance.courseNumber = courseNumber;
   }
 
@@ -143,6 +141,7 @@ class BlocQRCodeGeneratorPage extends BlocBase {
   }
 
   Widget _qrWidget() {
+    print("_qrWidget: ${_attendance.toString()}");
     return Expanded(
         child: Center(
           widthFactor: widthDP * 0.5,
@@ -156,13 +155,13 @@ class BlocQRCodeGeneratorPage extends BlocBase {
         ));
   }
 
-  void setQrWidgetAndSaveButton() {
+  Future<void> setQrWidgetAndSaveButton() async {
     if (_attendance.courseName != '' &&
         _attendance.courseType != '' &&
         _attendance.courseNumber != '' &&
         _attendance.courseClass != '') {
-      _setTeacherId();
-      _setTeacherName();
+      await _setTeacherId();
+      await _setTeacherName();
       _setCourseCreatedAt();
       _qrWidgetSink.add(_qrWidget());
       _saveQrButtonSink.add(_saveButton());
@@ -184,8 +183,8 @@ class BlocQRCodeGeneratorPage extends BlocBase {
       onPressed: () {
         saveGeneratedAttendance(_attendance);
       },
-      splashColor: ColorsConstants.backgroundColorBlue,
-      color: ColorsConstants.backgroundColorBlue,
+      splashColor: ColorsConstants.backgroundColorYellow,
+      color: ColorsConstants.backgroundColorYellow,
       shape: new RoundedRectangleBorder(
           borderRadius: new BorderRadius.circular(30.0)),
     );

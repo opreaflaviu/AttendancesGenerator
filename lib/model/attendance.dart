@@ -7,13 +7,13 @@ class Attendance {
   String _courseTeacher;
   String _courseTeacherId;
   String _courseCreatedAt;
-  String _courseNumber;
+  int _courseNumber;
   String _courseClass;
   String attendanceQr;
 
   Attendance(this._courseName, this._courseType, this._courseClass, this._courseTeacher, this._courseTeacherId, this._courseCreatedAt, this._courseNumber, {this.attendanceQr});
 
-  String get courseNumber => _courseNumber;
+  int get courseNumber => _courseNumber;
 
   String get courseCreatedAt => _courseCreatedAt;
 
@@ -45,7 +45,7 @@ class Attendance {
     _courseCreatedAt = value;
   }
 
-  set courseNumber(String value) {
+  set courseNumber(int value) {
     _courseNumber = value;
   }
 

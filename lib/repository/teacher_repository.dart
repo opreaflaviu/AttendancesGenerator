@@ -1,11 +1,13 @@
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
+
 import 'package:attendances/utils/custom_error.dart';
 import 'package:attendances/utils/shared_preferences_utils.dart';
-import 'package:password/password.dart';
 import 'package:http/http.dart' as http;
-import '../utils/constants.dart';
+import 'package:password/password.dart';
+
 import '../model/teacher.dart';
+import '../utils/constants.dart';
 
 
 class TeacherRepository {
@@ -130,5 +132,19 @@ class TeacherRepository {
       set.add(element.toString());
     });
     return set;
+  }
+
+  List<String> getCourses() {
+    var _allCoursesList = [
+      "ASC",
+      "PLF",
+      "Sport",
+      "Algebra",
+      "Baze de date",
+      "IA",
+      "OOP"
+    ];
+
+    return _allCoursesList;
   }
 }

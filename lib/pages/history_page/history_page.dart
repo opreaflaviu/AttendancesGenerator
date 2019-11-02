@@ -25,6 +25,9 @@ class _HistoryPageState extends State<HistoryPage> {
         Center(
           child: Text("Add your courses", style: TextStyle(fontSize: 20)),
         ),
+        SizedBox(
+          height: 15,
+        ),
         SafeArea(
             minimum: EdgeInsets.only(top: 10, left: 20, right: 20),
             child: Row(
@@ -34,7 +37,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 Padding(
                   padding: EdgeInsets.only(left: 12),
                   child: MaterialButton(
-                      color: ColorsConstants.purple,
+                      color: ColorsConstants.backgroundColorPurple,
                       child: Text("Add",
                           style: TextStyle(fontSize: 16, color: Colors.white)),
                       onPressed: () {
@@ -43,7 +46,7 @@ class _HistoryPageState extends State<HistoryPage> {
                 )
               ],
             )),
-        Divider(height: 20),
+        Divider(height: 20, thickness: 1.5,),
         SizedBox(
           height: 20,
         ),
@@ -92,7 +95,7 @@ class _HistoryPageState extends State<HistoryPage> {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0)),
             elevation: 1.0,
-            color: ColorsConstants.purple,
+            color: ColorsConstants.backgroundColorPurple,
             child: Container(
               child: Padding(
                 padding: EdgeInsets.all(15),

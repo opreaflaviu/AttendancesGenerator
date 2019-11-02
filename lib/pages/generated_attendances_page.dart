@@ -116,7 +116,7 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>
                 shape: new RoundedRectangleBorder(
                     borderRadius: new BorderRadius.circular(10.0)),
                 elevation: 1.0,
-                color: ColorsConstants.purple,
+                color: ColorsConstants.backgroundColorPurple,
                 child: Container(
                   margin: EdgeInsets.only(top: 8.0, bottom: 12.0),
                   child: Column(

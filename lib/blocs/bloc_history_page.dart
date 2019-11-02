@@ -1,26 +1,15 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:rxdart/rxdart.dart';
 
 import 'package:attendances/repository/teacher_repository.dart';
 import 'package:attendances/utils/constants.dart';
+import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'bloc_provider/bloc_base.dart';
 
 class BlocHistoryPage implements BlocBase {
 
-  var teachersRepository = TeacherRepository();
-
-  var _allCoursesList = [
-    "ASC",
-    "PLF",
-    "Sport",
-    "Algebra",
-    "Baze de date",
-    "IA",
-    "OOP"
-  ];
+  final teachersRepository = TeacherRepository();
   var _teacherCoursesList = Set<String>();
 
   ReplaySubject<Set<String>> _courseListReplaySubject;
@@ -31,9 +20,7 @@ class BlocHistoryPage implements BlocBase {
   void initState() async {
     _courseListReplaySubject = ReplaySubject<Set<String>>();
     var teacherId = await _getTeacherId();
-    if(_teacherCoursesList.isEmpty) {
-      _teacherCoursesList = await teachersRepository.getTeachersCourses(teacherId);
-    }
+    _teacherCoursesList = await teachersRepository.getTeachersCourses(teacherId);
     _courseSink.add(_teacherCoursesList);
   }
 
@@ -62,7 +49,7 @@ class BlocHistoryPage implements BlocBase {
 
   Stream<Set<String>> getCourses() => _courseStream;
 
-  List<String> getAllCourses() => _allCoursesList;
+  List<String> getAllCourses() => teachersRepository.getCourses();
 
   Future<String> _getTeacherId() async {
     var sharedPreferences = await SharedPreferences.getInstance();
