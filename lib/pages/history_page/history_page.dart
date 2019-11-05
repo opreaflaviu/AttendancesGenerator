@@ -1,3 +1,4 @@
+import 'package:attendances/blocs/bloc_generated_attendances_page.dart';
 import 'package:attendances/blocs/bloc_history_page.dart';
 import 'package:attendances/blocs/bloc_provider/bloc_provider.dart';
 import 'package:attendances/pages/generated_attendances_page.dart';
@@ -113,15 +114,16 @@ class _HistoryPageState extends State<HistoryPage> {
         direction: DismissDirection.endToStart,
         onDismissed: (direction) {
           _deleteCourse(item);
-          Scaffold.of(context).showSnackBar(SnackBar(
-              content: Text("$item deleted"),
-              backgroundColor: ColorsConstants.customBlack,
-              action: SnackBarAction(
-                textColor: ColorsConstants.backgroundColorYellow,
-                  label: "UNDO",
-                  onPressed: () {
-                    _addCourse(item);
-                  })));
+          //TODO: fix this. Is not working when you press UNDO button
+//          Scaffold.of(context).showSnackBar(SnackBar(
+//              content: Text("$item deleted"),
+//              backgroundColor: ColorsConstants.customBlack,
+//              action: SnackBarAction(
+//                textColor: ColorsConstants.backgroundColorYellow,
+//                  label: "UNDO",
+//                  onPressed: () {
+//                    _addCourse(item);
+//                  })));
         },
       ),
       onTap: () {
@@ -160,7 +162,10 @@ class _HistoryPageState extends State<HistoryPage> {
 
   _goToGenerateAttendancesPage(String course) {
     Navigator.push(context,
-        MaterialPageRoute(builder: (context) => GeneratedAttendancesPage(course)));
+        MaterialPageRoute(builder: (context) => BlocProvider(
+            bloc: BlocGeneratedAttendancesPage(),
+            child: GeneratedAttendancesPage(course)
+        )));
   }
 
   _deleteCourse(String course) async {

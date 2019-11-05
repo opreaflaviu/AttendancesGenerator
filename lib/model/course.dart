@@ -21,7 +21,7 @@ class Course {
     this._teacher = course[Constants.courseTeacher],
     this._teacherId = course[Constants.courseTeacherId],
     this._createdAt = course[Constants.courseCreatedAt],
-    this._number = int.parse(course[Constants.courseNumber]);
+    this._number = course[Constants.courseNumber];
 
   Map<String, dynamic> toJson() {
     Map map = Map<String, dynamic>();

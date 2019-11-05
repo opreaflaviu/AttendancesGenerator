@@ -158,7 +158,7 @@ class BlocQRCodeGeneratorPage extends BlocBase {
   Future<void> setQrWidgetAndSaveButton() async {
     if (_attendance.courseName != '' &&
         _attendance.courseType != '' &&
-        _attendance.courseNumber != '' &&
+        _attendance.courseNumber != 0 &&
         _attendance.courseClass != '') {
       await _setTeacherId();
       await _setTeacherName();

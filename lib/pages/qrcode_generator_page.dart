@@ -15,15 +15,18 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
 
   var _blocQrCodeGeneratorPage;
 
-  QRCodeGeneratorPageState() {
+  @override
+  void initState() {
+    _blocQrCodeGeneratorPage = BlocProvider.of<BlocQRCodeGeneratorPage>(context);
     _courseClass.text = "";
     _courseNumber.text = "";
+    _blocQrCodeGeneratorPage.setCourseName("");
+    _blocQrCodeGeneratorPage.setCourseType("");
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
-    _blocQrCodeGeneratorPage = BlocProvider.of<BlocQRCodeGeneratorPage>(context);
     var _mediaQuery = MediaQuery.of(context);
     var _widthDP = _mediaQuery.size.width;
     var _heightDP = _mediaQuery.size.height;
@@ -32,131 +35,129 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
 
     return SafeArea(
       minimum: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 10.0),
-      child: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            StreamBuilder<Set<String>>(
-                stream: _blocQrCodeGeneratorPage.getCourses(),
-                builder: (BuildContext buildContext, AsyncSnapshot<Set<String>> snapshot) {
-                  if (snapshot.hasData) {
-                    var data = snapshot.data;
-                    return _coursesMenu(data);
-                  } else {
-                    return _coursesMenu(Set<String>());
-                  }
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          StreamBuilder<Set<String>>(
+              stream: _blocQrCodeGeneratorPage.getCourses(),
+              builder: (BuildContext buildContext, AsyncSnapshot<Set<String>> snapshot) {
+                if (snapshot.hasData) {
+                  var data = snapshot.data;
+                  return _coursesMenu(data);
+                } else {
+                  return _coursesMenu(Set<String>());
                 }
-            ),
-            StreamBuilder<List<String>>(
-                stream: _blocQrCodeGeneratorPage.getCourseTypes(),
-                builder: (BuildContext buildContext, AsyncSnapshot<List<String>> snapshot) {
-                  if (snapshot.hasData) {
-                    var data = snapshot.data;
-                    return _courseTypesMenu(data);
-                  } else {
-                    return _courseTypesMenu([]);
-                  }
+              }
+          ),
+          StreamBuilder<List<String>>(
+              stream: _blocQrCodeGeneratorPage.getCourseTypes(),
+              builder: (BuildContext buildContext, AsyncSnapshot<List<String>> snapshot) {
+                if (snapshot.hasData) {
+                  var data = snapshot.data;
+                  return _courseTypesMenu(data);
+                } else {
+                  return _courseTypesMenu([]);
                 }
+              }
+          ),
+          TextField(
+              cursorColor: ColorsConstants.customBlack,
+              decoration: new InputDecoration(
+                  labelText: 'Course class',
+                  hintText: 'ex: 222',
+                  contentPadding:
+                  new EdgeInsets.only(bottom: 2.0, top: 8.0),
+                  hintStyle: TextStyle(
+                      fontSize: 16.0, color: ColorsConstants.customBlack),
+                  labelStyle: TextStyle(
+                      fontSize: 16.0,
+                      color: ColorsConstants.customBlack),
+                  focusedBorder: new UnderlineInputBorder(
+                      borderSide: new BorderSide(
+                          color: Colors.black26,
+                          width: 1.5
+                      )
+                  )),
+              style: new TextStyle(fontSize: 16.0, color: Colors.black),
+              controller: _courseClass
+          ),
+          TextField(
+              cursorColor: ColorsConstants.customBlack,
+              decoration: new InputDecoration(
+                  labelText: 'Course number',
+                  hintText: '1',
+                  contentPadding:
+                  new EdgeInsets.only(bottom: 2.0, top: 8.0),
+                  hintStyle: TextStyle(
+                      fontSize: 16.0, color: ColorsConstants.customBlack),
+                  labelStyle: new TextStyle(
+                      fontSize: 16.0,
+                      color: ColorsConstants.customBlack),
+                  focusedBorder: new UnderlineInputBorder(
+                      borderSide: new BorderSide(
+                          color: Colors.black26,
+                          width: 1.5
+                      )
+                  )),
+              style: new TextStyle(fontSize: 16.0, color: Colors.black),
+              controller: _courseNumber),
+          Padding(
+            padding: EdgeInsets.only(top: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: <Widget>[
+                RaisedButton(
+                  padding: new EdgeInsets.fromLTRB(
+                      _widthDP * 0.05,
+                      _heightDP * 0.01,
+                      _widthDP * 0.05,
+                      _heightDP * 0.01),
+                  child: new Text("Generate QR",
+                      style: TextStyle(
+                          color: ColorsConstants.customBlack,
+                          fontSize: 16.0)),
+                  onPressed: _generateQR,
+                  splashColor: ColorsConstants.backgroundColorYellow,
+                  color: ColorsConstants.backgroundColorYellow,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                ),
+                RaisedButton(
+                  padding: new EdgeInsets.fromLTRB(
+                      _widthDP * 0.08,
+                      _heightDP * 0.01,
+                      _widthDP * 0.09,
+                      _heightDP * 0.01),
+                  child: new Text("Clear QR",
+                      style: TextStyle(
+                          color: ColorsConstants.customBlack,
+                          fontSize: 16.0)),
+                  onPressed: () {
+                    _clearQR();
+                  },
+                  splashColor: ColorsConstants.backgroundColorYellow,
+                  color: ColorsConstants.backgroundColorYellow,
+                  shape: new RoundedRectangleBorder(
+                      borderRadius: new BorderRadius.circular(30.0)),
+                ),
+              ],
             ),
-            TextField(
-                cursorColor: ColorsConstants.customBlack,
-                decoration: new InputDecoration(
-                    labelText: 'Course class',
-                    hintText: 'ex: 222',
-                    contentPadding:
-                    new EdgeInsets.only(bottom: 2.0, top: 8.0),
-                    hintStyle: TextStyle(
-                        fontSize: 16.0, color: ColorsConstants.customBlack),
-                    labelStyle: TextStyle(
-                        fontSize: 16.0,
-                        color: ColorsConstants.customBlack),
-                    focusedBorder: new UnderlineInputBorder(
-                        borderSide: new BorderSide(
-                            color: Colors.black26,
-                            width: 1.5
-                        )
-                    )),
-                style: new TextStyle(fontSize: 16.0, color: Colors.black),
-                controller: _courseClass
-            ),
-            TextField(
-                cursorColor: ColorsConstants.customBlack,
-                decoration: new InputDecoration(
-                    labelText: 'Course number',
-                    hintText: '1',
-                    contentPadding:
-                    new EdgeInsets.only(bottom: 2.0, top: 8.0),
-                    hintStyle: TextStyle(
-                        fontSize: 16.0, color: ColorsConstants.customBlack),
-                    labelStyle: new TextStyle(
-                        fontSize: 16.0,
-                        color: ColorsConstants.customBlack),
-                    focusedBorder: new UnderlineInputBorder(
-                        borderSide: new BorderSide(
-                            color: Colors.black26,
-                            width: 1.5
-                        )
-                    )),
-                style: new TextStyle(fontSize: 16.0, color: Colors.black),
-                controller: _courseNumber),
-            Padding(
-              padding: EdgeInsets.only(top: 16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  RaisedButton(
-                    padding: new EdgeInsets.fromLTRB(
-                        _widthDP * 0.05,
-                        _heightDP * 0.01,
-                        _widthDP * 0.05,
-                        _heightDP * 0.01),
-                    child: new Text("Generate QR",
-                        style: TextStyle(
-                            color: ColorsConstants.customBlack,
-                            fontSize: 16.0)),
-                    onPressed: _generateQR,
-                    splashColor: ColorsConstants.backgroundColorYellow,
-                    color: ColorsConstants.backgroundColorYellow,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)),
-                  ),
-                  RaisedButton(
-                    padding: new EdgeInsets.fromLTRB(
-                        _widthDP * 0.08,
-                        _heightDP * 0.01,
-                        _widthDP * 0.09,
-                        _heightDP * 0.01),
-                    child: new Text("Clear QR",
-                        style: TextStyle(
-                            color: ColorsConstants.customBlack,
-                            fontSize: 16.0)),
-                    onPressed: () {
-                      _clearQR();
-                    },
-                    splashColor: ColorsConstants.backgroundColorYellow,
-                    color: ColorsConstants.backgroundColorYellow,
-                    shape: new RoundedRectangleBorder(
-                        borderRadius: new BorderRadius.circular(30.0)),
-                  ),
-                ],
-              ),
-            ),
+          ),
 
-            StreamBuilder<Widget>(
-                initialData: Container(width: 0, height: 0),
-                stream: _blocQrCodeGeneratorPage.getQrWidget(),
-                builder: (BuildContext buildContext, AsyncSnapshot<Widget> snapshot) => snapshot.data
-            ),
-            StreamBuilder<Widget>(
-                initialData: Container(width: 0, height: 0),
-                stream: _blocQrCodeGeneratorPage.getSaveButton(),
-                builder: (BuildContext buildContext, AsyncSnapshot<Widget> snapshot) => snapshot.data
-            ),
-          ],
-        ),
-      ),
+          StreamBuilder<Widget>(
+              initialData: Container(width: 0, height: 0),
+              stream: _blocQrCodeGeneratorPage.getQrWidget(),
+              builder: (BuildContext buildContext, AsyncSnapshot<Widget> snapshot) => snapshot.data
+          ),
+          StreamBuilder<Widget>(
+              initialData: Container(width: 0, height: 0),
+              stream: _blocQrCodeGeneratorPage.getSaveButton(),
+              builder: (BuildContext buildContext, AsyncSnapshot<Widget> snapshot) => snapshot.data
+          ),
+        ],
+      )
     );
   }
 
@@ -261,9 +262,15 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
         });
   }
 
+
+
   void _generateQR() {
-    _blocQrCodeGeneratorPage.setCourseClass(_courseClass.text);
-    _blocQrCodeGeneratorPage.setCourseNumber(int.parse(_courseNumber.text));
-    _blocQrCodeGeneratorPage.setQrWidgetAndSaveButton();
+    if (_courseClass.text.isEmpty || _courseNumber.text.isEmpty) {
+      _showAlertDialog("Empty fields", "Please complete all fields");
+    } else {
+      _blocQrCodeGeneratorPage.setCourseClass(_courseClass.text);
+      _blocQrCodeGeneratorPage.setCourseNumber(int.parse(_courseNumber.text));
+      _blocQrCodeGeneratorPage.setQrWidgetAndSaveButton();
+    }
   }
 }
