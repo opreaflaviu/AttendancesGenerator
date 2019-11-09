@@ -30,6 +30,7 @@ class BlocStatisticsPage extends BlocBase {
     _selectedCourseNameReplaySubject = ReplaySubject<String>();
     _isFetchingReplaySubject = ReplaySubject<bool>();
     _fileNameReplaySubject = ReplaySubject<String>();
+    _setFileName(" ");
   }
 
   @override

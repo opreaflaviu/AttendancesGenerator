@@ -1,13 +1,15 @@
-import 'dart:convert';
 import 'dart:async';
+import 'dart:convert';
+
 import 'package:attendances/model/attendance.dart';
 import 'package:attendances/model/course.dart';
 import 'package:attendances/model/course_attendances.dart';
 import 'package:attendances/model/student_attendance.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/constants.dart';
+
 import '../model/attendance.dart';
+import '../utils/constants.dart';
 
 class AttendanceRepository {
   Future<bool> saveAttendance(Attendance attendance) async {
@@ -127,6 +129,24 @@ class AttendanceRepository {
         throw Exception("Error");
       }
 
+    } else {
+      throw Exception("Error");
+    }
+  }
+
+  Future<bool> deleteGeneratedAttendance(Attendance attendance) async {
+    var response = await http.post(
+        Uri.encodeFull(Constants.rootApi + '/generated-attendance/remove'),
+        headers: {"Accept": "application/json"},
+        body: {'attendanceQR': attendance.attendanceQR}
+        );
+
+    if (response.statusCode == 200) {
+      var responseData = jsonDecode(response.body);
+      if (responseData['deletedCount'] == 1)
+        return true;
+      else
+        return false;
     } else {
       throw Exception("Error");
     }

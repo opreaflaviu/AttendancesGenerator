@@ -15,7 +15,6 @@ class StatisticsRepository {
         Constants.studentClass: "$classId"
       },
     );
-    print("start download");
     var response = await dio.download(
       Constants.rootApi + '/downloads',
       '$downloadsDir/$filename',
@@ -25,7 +24,6 @@ class StatisticsRepository {
     if (response.statusCode == 200) {
       var responseData = response.headers;
       final filenameResponse = responseData['filename'];
-      print("filename: $filenameResponse");
       OpenFile.open("$downloadsDir/$filename",
           type: "application/vnd.ms-excel",
           uti: "com.microsoft.excel.xls");

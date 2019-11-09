@@ -16,9 +16,14 @@ class _StatisticsPageState extends State<StatisticsPage> {
   var _blocStatisticsPage;
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     _blocStatisticsPage = BlocProvider.of<BlocStatisticsPage>(context);
+    _blocStatisticsPage.setSelectedCourseName("");
+    super.initState();
+  }
 
+  @override
+  Widget build(BuildContext context) {
     var _mediaQuery = MediaQuery.of(context);
     var _widthDP = _mediaQuery.size.width;
     var _heightDP = _mediaQuery.size.height;
@@ -155,14 +160,11 @@ class _StatisticsPageState extends State<StatisticsPage> {
     if (serviceStatus.value != ServiceStatus.enabled) {
       PermissionStatus permissionStatus = await PermissionHandler().checkPermissionStatus(permissionName);
       if (permissionStatus != PermissionStatus.granted) {
-        print("Permission: $permissionName has status: $permissionStatus");
         Map<PermissionGroup, PermissionStatus> permissionRequestStatus = await PermissionHandler().requestPermissions([permissionName]);
-        print("Permission: $permissionName has permissionRequestStatus: ${permissionRequestStatus[permissionName]}");
         if (permissionRequestStatus[permissionName] != PermissionStatus.granted)
           return false;
       }
     }
-    print("Permission: $permissionName granted");
     return true;
   }
 

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 class GeneratedAttendancesPage extends StatefulWidget {
   final String course;
+
   GeneratedAttendancesPage(this.course);
 
   @override
@@ -15,7 +16,7 @@ class GeneratedAttendancesPage extends StatefulWidget {
       _GeneratedAttendancesPageState(course);
 }
 
-class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>{
+class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage> {
   String course;
   var blocGeneratedAttendancesPage;
 
@@ -23,8 +24,10 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>{
 
   @override
   void initState() {
-    blocGeneratedAttendancesPage = BlocProvider.of<BlocGeneratedAttendancesPage>(context);
-    blocGeneratedAttendancesPage.fetchGeneratedAttendances(course);
+    blocGeneratedAttendancesPage =
+        BlocProvider.of<BlocGeneratedAttendancesPage>(context);
+    blocGeneratedAttendancesPage.setCourse(course);
+    blocGeneratedAttendancesPage.fetchGeneratedAttendances();
     super.initState();
   }
 
@@ -36,7 +39,8 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>{
         backgroundColor: ColorsConstants.backgroundColorYellow,
         title: Text("Generated attendances",
             textAlign: TextAlign.center,
-            style: TextStyle(fontSize: 24.0, color: ColorsConstants.customBlack)),
+            style:
+                TextStyle(fontSize: 24.0, color: ColorsConstants.customBlack)),
       ),
       body: _content(),
     );
@@ -65,7 +69,6 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>{
                     Navigator.of(context).pop(false);
                   }),
               FlatButton(
-                  color: ColorsConstants.backgroundColorYellow,
                   child: Text('Yes',
                       style: TextStyle(
                           fontSize: 16.0, color: ColorsConstants.customBlack)),
@@ -79,9 +82,8 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>{
 
   Widget _content() {
     return StreamBuilder<bool>(
-      stream: blocGeneratedAttendancesPage.getIsFetching(),
+        stream: blocGeneratedAttendancesPage.getIsFetching(),
         builder: (BuildContext buildContext, AsyncSnapshot<bool> snapshot) {
-        print("snapshot.data: ${snapshot.data}");
           if (snapshot.hasData) {
             if (snapshot.data) {
               return SafeArea(
@@ -93,178 +95,209 @@ class _GeneratedAttendancesPageState extends State<GeneratedAttendancesPage>{
               return _displayList();
             }
           } else {
-            return SafeArea(
-              child: Center()
-            );
+            return SafeArea(child: Center());
           }
-        }
-    );
+        });
   }
 
   Widget _displayList() {
     return SafeArea(
         minimum: EdgeInsets.only(top: 10, left: 20, right: 20),
         child: RefreshIndicator(
-      child: StreamBuilder<List<Attendance>>(
-        stream: blocGeneratedAttendancesPage.getGeneratedAttendances(),
-        builder: (BuildContext buildContext, AsyncSnapshot<List<Attendance>> snapshot){
-          if (snapshot.hasData) {
-            var generatedAttendanceList = snapshot.data;
-            return ListView.builder(
-                itemCount: generatedAttendanceList.length,
-                itemBuilder: (context, index) {
-                  var attendance = generatedAttendanceList.elementAt(index);
-                  return GestureDetector(
-                      key: Key(attendance.toString()),
-                      child: InkWell(
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      StudentsAtCoursePage(attendance)));
-                        },
-                        child: Card(
-                          margin: EdgeInsets.fromLTRB(4.0, 10.0, 4.0, 0.0),
-                          shape: new RoundedRectangleBorder(
-                              borderRadius: new BorderRadius.circular(10.0)),
-                          elevation: 1.0,
-                          color: ColorsConstants.backgroundColorPurple,
-                          child: Container(
-                            margin: EdgeInsets.only(top: 8.0, bottom: 12.0),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                Text(attendance.courseName,
-                                    style: TextStyle(
-                                        fontSize: 20.0,
-                                        fontWeight: FontWeight.bold,
-                                        color: Colors.white)),
-                                Divider(
-                                  color: ColorsConstants.customBlack,
-                                  thickness: 0.5,
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 8.0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            child: StreamBuilder<List<Attendance>>(
+                stream: blocGeneratedAttendancesPage.getGeneratedAttendances(),
+                builder: (BuildContext buildContext,
+                    AsyncSnapshot<List<Attendance>> snapshot) {
+                  if (snapshot.hasData) {
+                    var generatedAttendanceList = snapshot.data;
+                    return ListView.builder(
+                        itemCount: generatedAttendanceList.length,
+                        itemBuilder: (context, index) {
+                          var attendance =
+                              generatedAttendanceList.elementAt(index);
+                          return GestureDetector(
+                            key: Key(attendance.toString()),
+                            child: InkWell(
+                              onTap: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            StudentsAtCoursePage(attendance)));
+                              },
+                              child: Card(
+                                margin:
+                                    EdgeInsets.fromLTRB(4.0, 10.0, 4.0, 0.0),
+                                shape: new RoundedRectangleBorder(
+                                    borderRadius:
+                                        new BorderRadius.circular(10.0)),
+                                elevation: 1.0,
+                                color: ColorsConstants.backgroundColorPurple,
+                                child: Container(
+                                  margin:
+                                      EdgeInsets.only(top: 8.0, bottom: 12.0),
+                                  child: Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: <Widget>[
-                                      Column(
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Icon(
-                                                  attendance.courseType.startsWith('L') ||
-                                                      attendance.courseType
-                                                          .startsWith('l')
-                                                      ? CustomIcons.computer
-                                                      : CustomIcons.pen,
-                                                  size: 18.0,
-                                                  color: ColorsConstants.customBlack),
-                                              Padding(
-                                                  padding: EdgeInsets.only(right: 8.0)),
-                                              Text(
-                                                  "${attendance.courseType} ${attendance.courseNumber}",
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      color:
-                                                      ColorsConstants.customBlack)),
-                                            ],
-                                          ),
-                                          Padding(padding: EdgeInsets.all(6.0)),
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Icon(CustomIcons.calendar,
-                                                  size: 18.0,
-                                                  color: ColorsConstants.customBlack),
-                                              Padding(
-                                                  padding: EdgeInsets.only(right: 8.0)),
-                                              Text(
-                                                  "${attendance.courseCreatedAt.substring(0, 10)}",
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      color:
-                                                      ColorsConstants.customBlack)),
-                                            ],
-                                          ),
-                                        ],
+                                      Text(attendance.courseName,
+                                          style: TextStyle(
+                                              fontSize: 20.0,
+                                              fontWeight: FontWeight.bold,
+                                              color: Colors.white)),
+                                      Divider(
+                                        color: ColorsConstants.customBlack,
+                                        thickness: 0.5,
                                       ),
-                                      Column(
-                                        crossAxisAlignment: CrossAxisAlignment.start,
-                                        children: <Widget>[
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Icon(Icons.people,
-                                                  size: 18.0,
-                                                  color: ColorsConstants.customBlack),
-                                              Padding(
-                                                  padding: EdgeInsets.only(right: 8.0)),
-                                              Text("${attendance.courseClass}",
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      color:
-                                                      ColorsConstants.customBlack)),
-                                            ],
-                                          ),
-                                          Padding(padding: EdgeInsets.all(6.0)),
-                                          Row(
-                                            crossAxisAlignment: CrossAxisAlignment.start,
-                                            children: <Widget>[
-                                              Icon(Icons.access_time,
-                                                  size: 18.0,
-                                                  color: ColorsConstants.customBlack),
-                                              Padding(
-                                                  padding: EdgeInsets.only(right: 8.0)),
-                                              Text(
-                                                  "${attendance.courseCreatedAt.substring(11, 16)}",
-                                                  style: TextStyle(
-                                                      fontSize: 16.0,
-                                                      color:
-                                                      ColorsConstants.customBlack)),
-                                            ],
-                                          ),
-                                        ],
+                                      Padding(
+                                        padding: EdgeInsets.only(top: 8.0),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceEvenly,
+                                          children: <Widget>[
+                                            Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
+                                              children: <Widget>[
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Icon(
+                                                        attendance.courseType
+                                                                    .startsWith(
+                                                                        'L') ||
+                                                                attendance
+                                                                    .courseType
+                                                                    .startsWith(
+                                                                        'l')
+                                                            ? CustomIcons
+                                                                .computer
+                                                            : CustomIcons.pen,
+                                                        size: 18.0,
+                                                        color: ColorsConstants
+                                                            .customBlack),
+                                                    Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 8.0)),
+                                                    Text(
+                                                        "${attendance.courseType} ${attendance.courseNumber}",
+                                                        style: TextStyle(
+                                                            fontSize: 16.0,
+                                                            color: ColorsConstants
+                                                                .customBlack)),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                    padding:
+                                                        EdgeInsets.all(6.0)),
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Icon(CustomIcons.calendar,
+                                                        size: 18.0,
+                                                        color: ColorsConstants
+                                                            .customBlack),
+                                                    Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 8.0)),
+                                                    Text(
+                                                        "${attendance.courseCreatedAt.substring(0, 10)}",
+                                                        style: TextStyle(
+                                                            fontSize: 16.0,
+                                                            color: ColorsConstants
+                                                                .customBlack)),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            Column(
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: <Widget>[
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Icon(Icons.people,
+                                                        size: 18.0,
+                                                        color: ColorsConstants
+                                                            .customBlack),
+                                                    Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 8.0)),
+                                                    Text(
+                                                        "${attendance.courseClass}",
+                                                        style: TextStyle(
+                                                            fontSize: 16.0,
+                                                            color: ColorsConstants
+                                                                .customBlack)),
+                                                  ],
+                                                ),
+                                                Padding(
+                                                    padding:
+                                                        EdgeInsets.all(6.0)),
+                                                Row(
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Icon(Icons.access_time,
+                                                        size: 18.0,
+                                                        color: ColorsConstants
+                                                            .customBlack),
+                                                    Padding(
+                                                        padding:
+                                                            EdgeInsets.only(
+                                                                right: 8.0)),
+                                                    Text(
+                                                        "${attendance.courseCreatedAt.substring(11, 16)}",
+                                                        style: TextStyle(
+                                                            fontSize: 16.0,
+                                                            color: ColorsConstants
+                                                                .customBlack)),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
                                   ),
                                 ),
-                              ],
+                              ),
                             ),
-                          ),
-                        ),
-                      ),
-                      onLongPress: () {
-                        _showAlertDialog(
-                            "Remove course",
-                            "Are you sure you want to remove this course with all attendances?"
-                        ).then((bool canBeRemoved) {
-                          if (canBeRemoved) {
-                            _deleteGeneratedAttendance();
-                          }
+                            onLongPress: () {
+                              _showAlertDialog("Remove course",
+                                      "Are you sure you want to remove this course with all attendances?")
+                                  .then((bool canBeRemoved) {
+                                    if (canBeRemoved != null) {
+                                      if (canBeRemoved) {
+                                        _deleteGeneratedAttendance(attendance);
+                                      }
+                                    }
+
+                              });
+                            },
+                          );
                         });
-                      },
-                  );
-                });
-          } else {
-            return Center(
-              child: Text("You have no courses for $course",
-                  style: TextStyle(
-                      fontSize: 20.0, color: ColorsConstants.customBlack)
-              ),
-            );
-          }
-        }
-      ),
-      onRefresh: _getAttendanceOnRefresh
-    ));
+                  } else {
+                    return Center(
+                      child: Text("You have no courses for $course",
+                          style: TextStyle(
+                              fontSize: 20.0,
+                              color: ColorsConstants.customBlack)),
+                    );
+                  }
+                }),
+            onRefresh: _getAttendanceOnRefresh));
   }
 
-  _deleteGeneratedAttendance() {
-
+  _deleteGeneratedAttendance(Attendance attendance) {
+    blocGeneratedAttendancesPage.deleteGeneratedAttendance(attendance);
   }
 
   Future<bool> _getAttendanceOnRefresh() async {

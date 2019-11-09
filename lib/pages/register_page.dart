@@ -1,9 +1,10 @@
 import 'package:attendances/utils/colors_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:password/password.dart';
+
+import '../model/teacher.dart';
 import '../repository/teacher_repository.dart';
 import '../utils/colors_constants.dart';
-import '../model/teacher.dart';
 import '../utils/shared_preferences_utils.dart';
 
 class RegisterPage extends StatefulWidget {
@@ -208,7 +209,6 @@ class RegisterPageState extends State<RegisterPage> {
       if (true) {
         var password =
             Password.hash(_password.text, PBKDF2(iterationCount: 1000));
-        print("hash password: $password");
         Teacher teacher = Teacher(_number.text, _name.text, password);
         var teacherResponse = TeacherRepository().registerTeacher(teacher);
         teacherResponse.then((response) {

@@ -1,8 +1,9 @@
-import 'package:shared_preferences/shared_preferences.dart';
-import '../utils/constants.dart';
-import '../model/student.dart';
-import '../model/teacher.dart';
 import 'dart:async';
+
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../model/teacher.dart';
+import '../utils/constants.dart';
 
 class SharedPreferencesUtils {
   static Future<SharedPreferences> _sharedPreferences;
@@ -20,7 +21,6 @@ class SharedPreferencesUtils {
       sharedPrefs.setString(Constants.teacherName, teacher.teacherName);
       sharedPrefs.setString(Constants.teacherId, teacher.teacherId);
       sharedPrefs.setString(Constants.teacherPassword, teacher.teacherPassword);
-      print('shared' + sharedPrefs.getString(Constants.teacherName));
     });
   }
 

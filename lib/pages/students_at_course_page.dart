@@ -46,7 +46,6 @@ class _StudentsAtCoursePageState extends State<StudentsAtCoursePage> {
               );
             case ConnectionState.done:
               if (snapshot.hasError) {
-                print("Error: ${snapshot.error}");
                 return Scaffold(
                   body: Center(
                     child: Text('An error was encountered'),

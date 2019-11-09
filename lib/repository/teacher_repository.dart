@@ -110,7 +110,6 @@ class TeacherRepository {
       Map responseData = json.decode(response.body);
       var courseList = responseData['result'];
       var courseSet = fromListToSet(courseList);
-      print("course set: $courseSet");
       return courseSet;
     }
     throw Exception("Error");

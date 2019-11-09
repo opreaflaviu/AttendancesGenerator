@@ -141,7 +141,6 @@ class BlocQRCodeGeneratorPage extends BlocBase {
   }
 
   Widget _qrWidget() {
-    print("_qrWidget: ${_attendance.toString()}");
     return Expanded(
         child: Center(
           widthFactor: widthDP * 0.5,

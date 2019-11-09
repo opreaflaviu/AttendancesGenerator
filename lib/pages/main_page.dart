@@ -5,7 +5,7 @@ import 'package:attendances/blocs/bloc_qrcode_generator_page.dart';
 import 'package:attendances/blocs/bloc_statistics_page.dart';
 import 'package:attendances/model/attendance.dart';
 import 'package:attendances/model/course.dart';
-import 'package:attendances/pages/history_page/history_page.dart';
+import 'package:attendances/pages/history_page.dart';
 import 'package:attendances/pages/statistics_page.dart';
 import 'package:attendances/repository/attendance_repository.dart';
 import 'package:attendances/utils/custom_icons.dart';
@@ -42,7 +42,7 @@ class MainPageState extends State<MainPage> {
         body: _tabItem[_tabIndex],
         appBar: AppBar(
           title: Text(_titleList[_tabIndex],
-              textAlign: TextAlign.center,
+              textAlign: TextAlign.start,
               style: TextStyle(fontSize: 32.0, color: ColorsConstants.customBlack)),
           centerTitle: true,
           backgroundColor: ColorsConstants.backgroundColorYellow,
