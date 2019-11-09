@@ -84,7 +84,11 @@ class _StatisticsPageState extends State<StatisticsPage> {
                     _handlePermission(PermissionGroup.storage)
                     .then((hasPermission) {
                       if (hasPermission) {
-                        _blocStatisticsPage.downloadStatisticsFile(_studentsClassId.text);
+                        if (_studentsClassId.text.isNotEmpty && _blocStatisticsPage.getSelectedCourseName().isNotEmpty) {
+                          _blocStatisticsPage.downloadStatisticsFile(_studentsClassId.text);
+                        } else {
+                          _showAlertDialog("Empty fields", "Please complete all fields");
+                        }
                       }
                     });
                   },
@@ -92,6 +96,27 @@ class _StatisticsPageState extends State<StatisticsPage> {
                   color: ColorsConstants.backgroundColorPurple,
                   shape: new RoundedRectangleBorder(
                       borderRadius: new BorderRadius.circular(30.0)),
+                )
+              ),
+
+              Padding(
+                padding: EdgeInsets.only(top: 130, bottom: 20),
+                child: Center(
+                  child: StreamBuilder(
+                    stream: _blocStatisticsPage.getIsFetching(),
+                    builder: (BuildContext context, AsyncSnapshot<bool>
+                        snapshot) {
+                      if (snapshot.hasData) {
+                        if (snapshot.data) {
+                          return CircularProgressIndicator();
+                        } else {
+                          return Container();
+                        }
+                      } else {
+                        return Container();
+                      }
+                    },
+                  )
                 )
               ),
 
@@ -106,16 +131,19 @@ class _StatisticsPageState extends State<StatisticsPage> {
                       if (snapshot.data != null) {
                         text = snapshot.data;
                       }
-                      return Text(text, style:
-                      TextStyle
-                        (fontSize: 20));
+                      return Padding(
+                          padding: EdgeInsets.only(left: 20, right: 20,
+                              bottom: 20),
+                          child:Text(
+                              text,
+                              style: TextStyle(fontSize: 20)
+                          )
+                      );
                     },
                   )
 
                 ),
               ),
-
-
             ],
           ),
         )
@@ -142,7 +170,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
     List<DropdownMenuItem<String>> listDrop = [];
 
     listDrop.add(DropdownMenuItem(
-      child: Text("Select course name", style: TextStyle(fontSize: 18)),
+      child: Text("Select course name", style: TextStyle(fontSize: 16)),
       value: "",
     ));
 
@@ -155,7 +183,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
 
     return DropdownButtonHideUnderline(
         child: StreamBuilder(
-            stream: _blocStatisticsPage.getSelectedCourseName(),
+            stream: _blocStatisticsPage.getSelectedCourseNameStream(),
             builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
               return DropdownButton(
                   value: snapshot.data,
@@ -169,6 +197,26 @@ class _StatisticsPageState extends State<StatisticsPage> {
                    });
             })
     );
+  }
+
+  Future<Null> _showAlertDialog(String title, String content) {
+    return showDialog<Null>(
+        context: context,
+        barrierDismissible: true,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(title),
+            content: Text(content),
+            actions: <Widget>[
+              FlatButton(
+                child: Text('Ok'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
   }
 
 }

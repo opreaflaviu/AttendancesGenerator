@@ -15,6 +15,11 @@ class BlocStatisticsPage extends BlocBase {
   Sink<String> get _selectedCourseNameSink => _selectedCourseNameReplaySubject.sink;
   Stream<String> get _selectedCourseNameStream => _selectedCourseNameReplaySubject.stream;
 
+  var _isFetching = false;
+  ReplaySubject<bool> _isFetchingReplaySubject;
+  Sink<bool> get _isFetchingSink => _isFetchingReplaySubject.sink;
+  Stream<bool> get _isFetchingStream => _isFetchingReplaySubject.stream;
+
   var _fileName = "";
   ReplaySubject<String> _fileNameReplaySubject;
   Sink<String> get _fileNameSink => _fileNameReplaySubject.sink;
@@ -23,12 +28,14 @@ class BlocStatisticsPage extends BlocBase {
   @override
   void initState() async {
     _selectedCourseNameReplaySubject = ReplaySubject<String>();
+    _isFetchingReplaySubject = ReplaySubject<bool>();
     _fileNameReplaySubject = ReplaySubject<String>();
   }
 
   @override
   void dispose() {
     _selectedCourseNameReplaySubject.close();
+    _isFetchingReplaySubject.close();
     _fileNameReplaySubject.close();
   }
 
@@ -37,9 +44,13 @@ class BlocStatisticsPage extends BlocBase {
     _selectedCourseNameSink.add(_selectedCourseName);
   }
 
-  Stream<String> getSelectedCourseName() {
+  Stream<String> getSelectedCourseNameStream() {
     _selectedCourseNameSink.add(_selectedCourseName);
     return _selectedCourseNameStream;
+  }
+
+  String getSelectedCourseName() {
+    return _selectedCourseName;
   }
   
   _setFileName(String filename) {
@@ -52,13 +63,27 @@ class BlocStatisticsPage extends BlocBase {
     return _fileNameStream;
   }
 
+  _setIsFetching(bool isFetching){
+    _isFetching = isFetching;
+    _isFetchingSink.add(_isFetching);
+  }
+
+  Stream<bool> getIsFetching() {
+    return _isFetchingStream;
+  }
+
   List<String> getAllCourses() => teachersRepository.getCourses();
 
   downloadStatisticsFile(String classId) {
+    _setFileName(" ");
+    _setIsFetching(true);
     statisticsRepository.downloadStatisticsFile(_selectedCourseName, classId)
         .then((filename) {
           //TODO: set location for iOS also
-          _setFileName("You can find $filename in Download folder");
+          _setIsFetching(false);
+          if (filename != " ") {
+            _setFileName("You can find $filename in Download folder");
+          }
     });
   }
 }
