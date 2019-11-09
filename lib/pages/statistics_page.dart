@@ -52,6 +52,7 @@ class _StatisticsPageState extends State<StatisticsPage> {
               Padding(
                 padding: EdgeInsets.only(left: 20, right: 20),
                 child: TextField(
+                    keyboardType: TextInputType.number,
                     cursorColor: ColorsConstants.customBlack,
                     decoration: new InputDecoration(
                         labelText: 'Class number',

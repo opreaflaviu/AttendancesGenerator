@@ -208,7 +208,7 @@ class RegisterPageState extends State<RegisterPage> {
     if (_password.text == _confirmPassword.text) {
       if (true) {
         var password =
-            Password.hash(_password.text, PBKDF2(iterationCount: 1000));
+            Password.hash(_password.text, PBKDF2(iterationCount: 10));
         Teacher teacher = Teacher(_number.text, _name.text, password);
         var teacherResponse = TeacherRepository().registerTeacher(teacher);
         teacherResponse.then((response) {

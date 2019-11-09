@@ -83,6 +83,7 @@ class QRCodeGeneratorPageState extends State<QRCodeGeneratorPage> {
               controller: _courseClass
           ),
           TextField(
+              keyboardType: TextInputType.number,
               cursorColor: ColorsConstants.customBlack,
               decoration: new InputDecoration(
                   labelText: 'Course number',
